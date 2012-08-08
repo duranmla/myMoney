@@ -4,15 +4,18 @@
     config: {
         model: 'myMoney.model.Contactos',
         autoLoad: true,
-        sorters: 'firstName',
-        grouper: {
+        
+		sorters: [{	property: 'firstName'}, {direction: 'DESC'}],
+        
+		grouper: {
             groupFn: function(record) {
-                return record.get('lastName')[0];
+                return record.get('firstName')[0];
             }
         },
+		
         proxy: {
-            type: 'ajax',
-            url: 'resources/ddefault/contactos.json'
+            type: 'localstorage',
+			id: 'contactosid'
         }
     }
 });

@@ -1,8 +1,8 @@
 Ext.define('myMoney.view.Historial',{
 	extend: 'Ext.navigation.View',
+	xtype: 'historial',
 	fullscreen: true,
 	scrollable: true,
-	xtype: 'historial',
 	id: 'histId',
 	
 	config: {

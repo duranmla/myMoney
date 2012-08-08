@@ -1,188 +1,139 @@
 Ext.define('myMoney.controller.Agenda', {
     extend: 'Ext.app.Controller',
     
-	requires: [
-	'Ext.carousel.Carousel',
-	'Ext.Label',
-	],
+	requires: ['Ext.carousel.Carousel','Ext.Label'],
 	
     config: {
-        refs: {
-            agenda: 'agenda',
-            agendTool: '#agendToolbar',
-            actualizar: '#actualizar',
-            borrar: '#borrar',
-            anadir: '#anadir',
-			listaC: '#listaContactos',
-            
+        refs: {            
+			agenda: 'agenda',
+			mainView: 'mainView',
+			editor: 'contactoEditor'
         },
         control: {
-            'agenda #listaContactos': {
-				itemdoubletap: 'showContact',
-				itemsingletap: 'someData'
+         	agenda: {
+				addNewContact: 'addNewContact',
+				contactDisclose: 'contactDisclose',
 			},
 			
-        	actualizar: {
-        		tap: 'refrescar',
-        	},
-        	
-        	borrar: {
-        		tap: 'deleteItem',
-        	},
-        	
-        	anadir: {
-        		tap: 'addContact',
-        	}
+			editor: {
+				guardaContacto: 'guardaContacto',
+				regresaAgenda: 'regresaAgenda',
+				deleteContact: 'deleteContact',
+			},
         }
     },
-    
-    refrescar: function(){
+	
+	
+	//Funciones auxiliares
+    getRandomInt: function (min, max) {
+    	return Math.floor(Math.random() * (max - min + 1)) + min;
+	},
+	
+	animacionIzq: {type: 'slide', direction: 'left'},
+	animacionDer: {type: 'slide', direction: 'right'},
+	
+	muestraVentana: function(record){
+		var contactoEditor = this.getEditor();
+		contactoEditor.setRecord(record);
+		Ext.Viewport.animateActiveItem(contactoEditor, this.animacionIzq);
+	},
+	
+	activaAgenda: function(){
+		Ext.Viewport.animateActiveItem(this.getMainView(), this.animacionDer);
+	},
+	//Fin funciones auxiliares
+	
+	addNewContact: function(){
+    	console.log('Agregando contacto desde el controlador!');
+
+		var ahora = new Date();
+		var contactId = (ahora.getTime()).toString() + (this.getRandomInt(0, 100)).toString();
+
+		var newContact = Ext.create("myMoney.model.Contactos", {
+			id: contactId,
+			firstName: "",
+			lastName: "",
+			title: "",
+            telephone: "",
+			email: "",
+			bankname: "",
+			accountnumber: ""
+	    });
+		
+		this.muestraVentana(newContact);
+    },
+	
+	guardaContacto: function(){
+		console.log('Guardando desde el controlador');
+		
+		//Tomo el control del modelo
+		var modelo = this.getEditor();
+		//Tomo los valores que tenia el contacto y los agregados
+		var valoresActuales = modelo.getRecord();
+		var valoresNuevos = modelo.getValues();
+		//Actualizo los campos del contacto para luego poder usar el metodo de validacion sobre mi modelo
+		valoresActuales.set('firstName',valoresNuevos.firstName);
+		valoresActuales.set('lastName',valoresNuevos.lastName);
+		valoresActuales.set('title',valoresNuevos.title);
+		valoresActuales.set('telephone',valoresNuevos.telephone);
+		valoresActuales.set('email',valoresNuevos.email);
+		valoresActuales.set('bankName',valoresNuevos.bankName);
+		valoresActuales.set('accountName',valoresNuevos.accountName);		
+		//Valido la informacion
+		var errors = valoresActuales.validate();
+		
+		if (!errors.isValid()) {
+			Ext.Msg.alert('Espera!', errors.getByField("firstName")[0].getMessage(), Ext.emptyFn);
+			valoresActuales.reject();
+			return;
+		}
+		
+		var contactosStore = Ext.getStore("Contactos");
+	
+		if (null == contactosStore.findRecord('id', valoresActuales.data.id)) {
+			contactosStore.add(valoresActuales);
+		}
+	
+		contactosStore.sync();
+	
+		contactosStore.sort([{ property: 'firstName', direction: 'DESC'}]);
+	
+		this.activaAgenda();
+	},
+	
+	regresaAgenda: function(){
+		console.log('regresando desde el controlador!!');
+		this.activaAgenda();
+	},
+	
+	contactDisclose: function(list, record) {
+		console.log('Flechita desde el controlador!!');
+		this.muestraVentana(record);
+		
+	},
+	
+	refrescar: function(){
     	console.log("Refresco");
     },
     
-	someData: function(list, index, element, record){
-		lista = list;
-		indice = index;
-		myrecord = record;
-	},
-	
-    deleteItem: function(){
-		Ext.Msg.confirm("Cuidado!", "Seguro que deseas borrar los datos de este contacto?", Ext.emptyFn);
+    deleteContact: function(){
+		console.log('Borrando desde controlador');
+		Ext.Msg.confirm("Cuidado!", "Seguro que deseas borrar los datos de este contacto?", 
+			function(buttonId){
+				if(buttonId == "yes"){
+		var contacto = this.getEditor();
+		var info = contacto.getRecord();
+		var myStore = Ext.getStore("Contactos");
 
-		if(lista.getId()=='listaContactos'){	
-			//Ext.getCmp('listaContactos').removeAt(indice);
-		}
-    },
-    
-    addContact: function(){
-    	
-		addContactPanel = Ext.Viewport.add({
-			xtype: 'panel',
-			scrollable: true,
-			modal: true,                  // Para hacerlo flotante
-			hideOnMaskTap: true,          // Para que al hacer click fuera del Panel este se cierre
-			centered: true,
-			width: '40%',
-			height: '80%',
-			items:[
-				{
-					docked: 'bottom',
-					xtype: 'titlebar',
-					items:[
-						{
-							xtype: 'button',
-							ui: 'normal',
-							text: 'Aceptar',
-							listeners : {
-								tap : function() {
-									addContactPanel.hide(); // Para cerrar el Panel
-									Ext.Msg.alert("Contacto Agregado!");  
-								}
-							}
-						},  
-						{
-							xtype: 'button',
-							ui: 'normal',
-							text: 'Cancelar',
-							listeners : {
-								tap : function() {
-									addContactPanel.hide();
-								}
-							}              
-						},                  
-					]
-				},
-				{
-					xtype: 'fieldset',
-					id: 'formPanelContact',
-					title: 'Nuevo Contacto',
-					 
-					items: [
-						{
-							xtype: 'textfield',
-							label: 'Nombre',
-							name: 'contactName',
-							placeHolder: 'Nombre'
-						},
-						{
-							xtype: 'textfield',
-							label: 'Apellido',
-							name: 'contactLastName',
-							placeHolder: 'Apellido'
-						},
-						{
-							xtype: 'textfield',
-							label: 'Banco',
-							name: 'contactBank',
-							placeHolder: 'Banco'
-						},
-						{
-							xtype: 'numberfield',
-							label: 'Cuenta',
-							name: 'contactAccount',
-							placeHolder: '0000-0000-00-0000000000'
-						}
-						/**Seleccionar una foto de usuario**/
-					]	
-				},
-			]
-		});//.showBy(this.getAnadir());
-    },
-    
-	showContact: function(list, index, element, record){
-	/*var name = record.get('firstName') + ' ' + record.get('lastName');
-		cuenta = record.get('telephone');*/
+		myStore.remove(info);
+		myStore.sync();
 		
-		this.getAgenda().push({
-			title:  'Informacion',
-			layout: 'vbox',
-			
-			items: [
-				{
-					//style: 'background-color: grey',
-					flex: 1,
-					styleHtmlContent: true,
-					id: 'content',
-
-				},
-				{
-					flex:3,
-					xtype: 'carousel',
-					
-					defaults: {
-						styleHtmlContent: true
-					},
-					
-				    items: [
-				        {
-				        	flex:1,
-				        	docked: 'top',
-				        	disabled: true,
-				        	//style: 'background:green',
-				        	xtype: 'label',
-				        	html: 'Pendiente Pagar'
-				        },
-						{
-				        	flex:2,
-					    	xtype: 'list',
-					    	ui: 'round',
-					    	fullscreen: true,
-					    	itemTpl: ['<B>Concepto:</B><BR>{desc}',
-					    	          '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-					    	          '<FONT size=2>Monto:<FONT size=2 color=red> {mont}Bsf</FONT>'].join(''),
-						    	data: [
-					    	        { desc: 'Prestamo', mont: 200 },
-					    	        { desc: 'Compra de Ropa', mont: 800 }
-					    	    ],
-
-						},
-						{	
-							html : 'Cobros Pendientes',
-						}
-					]
-					
-				}
-			]
-		})
-	}
+		this.activaAgenda();
+		}}, this);
+    },
+	
+	launch: function () {
+        this.callParent();
+		Ext.getStore("Contactos").load();
+    },
 });

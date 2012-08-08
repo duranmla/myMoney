@@ -2,10 +2,6 @@ Ext.define("myMoney.view.Main", {
     extend: 'Ext.tab.Panel',
 	xtype: 'mainView',
 	
-    requires: [
-        'Ext.TitleBar',
-    ],
-	
     config: {
         tabBarPosition: 'bottom',
 

@@ -8,7 +8,7 @@ Ext.application({
     models: ["Transaccion", "Name", "Contactos"],
 	stores: ['Contactos','TipoPago','Clasificacion','Transacciones'],
     controllers: ["Historial", "Settings", "Agenda", "Inicio", "Acciones"],
-    views: ['Main','Inicio','Acciones','Agenda','Settings','Historial'],
+    views: ['Main','Inicio','Acciones','Agenda','Settings','Historial','ListaContactos', 'ContactoEditor'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -33,7 +33,9 @@ Ext.application({
         Ext.fly('appLoadingIndicator').destroy();
 
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('myMoney.view.Main'));
+		var principal = {xtype: 'mainView'};
+		var contactoEditor = {xtype: 'contactoEditor'};
+        Ext.Viewport.add([principal, contactoEditor]);
     },
 
     onUpdated: function() {

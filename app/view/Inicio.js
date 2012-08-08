@@ -3,15 +3,8 @@ Ext.define('myMoney.view.Inicio', {
 	xtype: 'inicio',
 	fullscreen: true,
 	scrollable: true,
-	//layout: {animation: 'fade', duration:500},
 	
-	requires: [
-	'Ext.form.FieldSet',
-	'Ext.field.Password',
-	'Ext.dataview.List',
-	'Ext.field.Search',
-	'Ext.field.Toggle',
-	],
+	requires: ['Ext.form.FieldSet','Ext.field.Password'],
 	
 	config: {
 		title: 'Inicio',
