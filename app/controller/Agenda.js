@@ -7,7 +7,7 @@ Ext.define('myMoney.controller.Agenda', {
         refs: {            
 			agenda: 'agenda',
 			mainView: 'mainView',
-			editor: 'contactoEditor'
+			editor: 'contactoEditor',
         },
         control: {
          	agenda: {
@@ -89,7 +89,7 @@ Ext.define('myMoney.controller.Agenda', {
 		}
 		
 		var contactosStore = Ext.getStore("Contactos");
-	
+		
 		if (null == contactosStore.findRecord('id', valoresActuales.data.id)) {
 			contactosStore.add(valoresActuales);
 		}
@@ -135,5 +135,7 @@ Ext.define('myMoney.controller.Agenda', {
 	launch: function () {
         this.callParent();
 		Ext.getStore("Contactos").load();
+		Ext.getStore("Notificaciones").load();
+		Ext.getStore("Clasificacion").load();
     },
 });

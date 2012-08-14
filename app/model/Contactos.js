@@ -19,6 +19,8 @@ Ext.define('myMoney.model.Contactos', {
 		validations: [
 			{ type: 'presence', field: 'id'},
 			{ type: 'presence', field: 'firstName', message: 'El contacto debe tener un nombre'},
-		]
+		],
+		
+		hasMany: 'Notificaciones'
     }
 });

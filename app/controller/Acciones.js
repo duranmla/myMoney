@@ -20,8 +20,7 @@ Ext.define('myMoney.controller.Acciones', {
 	
 	showDetails: function(list, index, element, record){
 		switch(index){
-		case 0:
-				this.getAcciones().push({ //Permite desplegar una vista sobre la misma tap
+		case 0: this.getAcciones().push({ //Permite desplegar una vista sobre la misma tap
 					xtype: 'formpanel',
 					styleHtmlContent: true,
 					title: record.get('title'),
@@ -57,7 +56,7 @@ Ext.define('myMoney.controller.Acciones', {
 									xtype: 'selectfield',
 									label: 'Cuenta',
 									name: 'cuenta',
-									store: 'TipoPago',
+									store: 'Cuentas',
 									displayField: 'name',
 									valueField: 'name',
 								},
@@ -80,12 +79,8 @@ Ext.define('myMoney.controller.Acciones', {
 							}
 						}
 					]
-					//html: record.get('content'),
-				});
+		});
 		break;
-		
-		//case 1: alert('No Implementado Aun');
-		//break;
 		
 		case 1: this.getAcciones().push({ 
 					xtype: 'container',

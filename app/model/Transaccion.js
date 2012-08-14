@@ -7,7 +7,11 @@ Ext.define('myMoney.model.Transaccion', {
             {name: 'descrip', type: 'auto'},
 			{name: 'monto', type: 'auto'},
 			{name: 'cuenta', type: 'auto'},
-			{name: 'date', type: 'auto'},
-        ]
+			{name: 'date', type: 'date', dateFormat: 'c'},
+        ],
+		
+		validations: [
+			{type: 'presence', field: 'descrip', message: 'La transaccion debe tener una descripcion'}
+		]
     }
 });

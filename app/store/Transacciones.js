@@ -6,9 +6,11 @@ Ext.define('myMoney.store.Transacciones',{
 		autoLoad: true,
 		
 		proxy: {
-			type: 'ajax',
-			url: 'resources/ddefault/transaccion.json'
-		}
+			type: 'localstorage',
+			id: 'transaccionesid'
+		},
+		
+		sorters: [{property: 'date'}, {direction: 'DESC'}]
 	}
 
 });

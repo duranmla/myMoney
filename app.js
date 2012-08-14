@@ -5,10 +5,11 @@ Ext.application({
         'Ext.MessageBox'
     ],
 
-    models: ["Transaccion", "Name", "Contactos"],
-	stores: ['Contactos','TipoPago','Clasificacion','Transacciones'],
+    models: ["Transaccion", "Name", "Contactos", "Notificaciones"],
+	stores: ['Contactos','Cuentas','Clasificacion','Transacciones', 'Notificaciones'],
     controllers: ["Historial", "Settings", "Agenda", "Inicio", "Acciones"],
-    views: ['Main','Inicio','Acciones','Agenda','Settings','Historial','ListaContactos', 'ContactoEditor'],
+    views: ['Main','Inicio','Acciones','Agenda','Settings','Historial','ListaContactos', 'ContactoEditor', 
+			'ListaN'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -52,7 +53,7 @@ Ext.application({
 	
 	    "js": [
 			{
-				//"path": "sdk/sencha-touch.js"
+				"path": "sdk/sencha-touch.js",
 				"path" : "assets/scharts/sencha-touch-debug.js"
 			},
 			{

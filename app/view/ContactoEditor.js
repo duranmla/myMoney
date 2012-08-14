@@ -1,7 +1,9 @@
-//Esta vista extra permite agregar un nuevo contacto
+//Esta vista extra permite agregar un nuevo contacto y ver la informacion del mismo.
 Ext.define('myMoney.view.ContactoEditor', {
 	extend: 'Ext.form.Panel',
 	alias: 'widget.contactoEditor',
+	
+	requires: ['Ext.field.Email'],
 	
 	initialize: function(){
 		this.callParent(arguments);
@@ -94,17 +96,64 @@ Ext.define('myMoney.view.ContactoEditor', {
 			items: [{xtype: 'spacer'}, borrar]
 		};
 		
+		//Interfaz para agregar pagos o deudas
+		var actualizar = { 
+		   iconMask: true, 
+		   ui: 'plain',  
+		   iconCls: 'refresh',
+		   hidden: false
+	   };
+	   
+	   var agregar = { 
+		   iconMask: true, 
+		   ui: 'plain', 
+		   iconCls: 'add',
+		   hidden: false,
+		   handler: this.addAlert,
+		   scope: this,
+	   };
+	   
+	   var borrar = { 
+		   iconMask: true, 
+		   ui: 'plain', 
+		   iconCls:'delete',
+		   id: 'borrarCE',
+		   hidden: false,
+		   handler: this.borrando,
+		   scope: this,
+	   };
+		
+		var barraCc = {
+			xtype: 'toolbar',
+			title: 'Cuentas por Cobrar',
+			style: 'background:#74A204',
+			items: [actualizar, borrar, {xtype: 'spacer'}, agregar]
+		};
+		
+		var barraCp = {
+			xtype: 'toolbar',
+			title: 'Cuentas por Pagar',
+			items: [actualizar, borrar, {xtype: 'spacer'}, agregar]
+		};
+		
+		var lista = {
+			xtype: 'listac',
+			store: Ext.getStore('Contactos'),
+		};
+		//Fin de Interfaz de pagos y deudas
+		
 		this.add( topBar,
 			{
 				xtype: 'fieldset', 
 				title: 'Datos',
 				instructions: 'Indique los datos del nuevo contacto',
 				items:[textNombre, textApellido, textTitle, textTlf, textEmail, banco, nroBanco]
-			},bottomBar
-		);
+			},
+			bottomBar);
 	},
 	
 	//Funciones locales
+	
 	guardaTap: function() {
 		console.log('Guardando!!');
 		this.fireEvent('guardaContacto', this);

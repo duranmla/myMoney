@@ -3,6 +3,8 @@ Ext.define('myMoney.view.Settings',{
 	fullscreen: true,
 	xtype: 'configuracion',
 	
+	requires: ['Ext.field.Toggle'],
+	
 	config: {
 		title: 'Configuracion',
 		iconCls: 'settings',
@@ -39,7 +41,7 @@ Ext.define('myMoney.view.Settings',{
 	            items: [
 	                {
 	                    xtype: 'checkboxfield',
-	                    label: 'En Wi-Fi',
+	                    label: 'Wi-Fi',
 	                    name: 'redop1',
 	                },
 	                {
@@ -51,22 +53,48 @@ Ext.define('myMoney.view.Settings',{
 	        },
 			{
 				xtype: 'fieldset',
-				title: 'Configuracion de Cuentas',
-				instructions: 'Agregue/Elimine Cuentas de Capital',
+				title: 'Configuracion de Categorias',
+				instructions: 'Agregue/Elimine Categorias',
 				
 				items: [
 					{
 						xtype: 'button',
-						id: 'verCuentas',
-						text: 'Cuentas Actuales',
+						id: 'verClass',
+						ui: 'confirm',
+						text: 'Categorias',
+						handler: function(){
+							console.log('Ver clases');
+							this.fireEvent('verClassCommand', this);
+						}, 
 					},
 					{
 						xtype: 'button',
-						id: 'addCuentas',
-						text: 'Nueva Cuenta'
+						id: 'addClass',
+						ui: 'confirm',
+						text: 'Nueva'
+					}
+				]
+			},
+			{
+				xtype: 'fieldset',
+				title: 'Configuracion de Cuentas',
+				instructions: 'Agregue/Elimine Cuentas',
+				
+				items: [
+					{
+						xtype: 'button',
+						id: 'verAcc',
+						ui: 'confirm',
+						text: 'Cuentas',
+					},
+					{
+						xtype: 'button',
+						id: 'addAcc',
+						ui: 'confirm',
+						text: 'Nueva'
 					}
 				]
 			}
 		]
-	}
+	},
 });

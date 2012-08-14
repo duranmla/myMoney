@@ -1,6 +1,7 @@
-	Ext.define('myMoney.store.Contactos', {
+Ext.define('myMoney.store.Contactos', {
     extend: 'Ext.data.Store',
-
+	requires:"Ext.data.proxy.LocalStorage",
+	
     config: {
         model: 'myMoney.model.Contactos',
         autoLoad: true,
