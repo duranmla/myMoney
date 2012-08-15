@@ -3,7 +3,8 @@ Ext.define('myMoney.controller.Historial', {
     
     config: {
         refs: {
-			historial: 'historial'
+			historial: 'historial',
+			transHist: 'transHist'
         },
         control: {
             'historial list': {
@@ -12,25 +13,13 @@ Ext.define('myMoney.controller.Historial', {
         }
     },
 	
+	animacionIzq: {type: 'slide', direction: 'left'},
+	
 	showDetails: function(list, index, element, record){
 		
 		switch(index){
-			case 0: this.getHistorial().push({
-						
-						xtype: 'panel',
-						title: record.get('title'),
-						layout: 'fit',
-						htmlContent: true,
-						
-						items: [
-							{
-								html:[ 
-									//Mostrando Grafico
-								].join('')
-							}
-						]
-					
-				});
+			case 0: 
+				Ext.Viewport.animateActiveItem(this.getTransHist(), this.animacionIzq);
 			break;
 			
 			case 1: this.getHistorial().push({

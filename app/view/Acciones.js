@@ -13,7 +13,7 @@ Ext.define('myMoney.view.Acciones',{
         },
 
         items: [
-			{xtype: 'titlebar', title: 'Acciones', docked: 'top'},
+			{xtype: 'toolbar', title: 'Acciones', docked: 'top'},
             {
                 xtype: 'list',
                 itemTpl: '{item}',

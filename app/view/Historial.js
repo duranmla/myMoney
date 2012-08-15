@@ -1,28 +1,29 @@
 Ext.define('myMoney.view.Historial',{
-	extend: 'Ext.navigation.View',
-	xtype: 'historial',
-	fullscreen: true,
+	extend: 'Ext.Panel',
+    xtype: 'historial',
+    fullscreen: true,
 	scrollable: true,
-	id: 'histId',
 	
-	config: {
-		title: 'Historial',
-		iconCls: 'time',
-		
-		items: [
-			{
-				xtype: 'list',
-				id: 'histList',
-				itemTpl: '{title}',
-				title: 'Historial',
-				styleHtmlContent: true,
-				
+
+    config: {
+        title: 'Historial',
+        iconCls: 'time',
+        layout: {
+            type: 'fit',
+        },
+
+        items: [
+			{xtype: 'toolbar', title: 'Historial', docked: 'top'},
+            {
+                xtype: 'list',
+                itemTpl: '{title}',
+		        styleHtmlContent: true,
+
 				data: [
 					{title: 'Historico de Gastos'},
 					{title: 'Grafico de Gastos'}
 				]
-			},
-		]
-	}
-
+            },
+        ]
+    }
 });

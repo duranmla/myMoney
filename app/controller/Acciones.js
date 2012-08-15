@@ -10,7 +10,8 @@ Ext.define('myMoney.controller.Acciones', {
 	config: {
         refs: {
 			acciones: 'acciones',
-			transaccion: 'transaccion'
+			transaccion: 'transaccion',
+			mainView: 'mainView'
         },
         control: {
 			'acciones list':{
@@ -28,7 +29,7 @@ Ext.define('myMoney.controller.Acciones', {
 	animacionDer: {type: 'slide', direction: 'right'},
 	
 	needBack: function(){
-		Ext.Viewport.animateActiveItem(this.getAcciones(), this.animacionDer)
+		Ext.Viewport.animateActiveItem(this.getMainView(), this.animacionDer)
 	},
 	
 	saveTransCommand: function(){
@@ -65,7 +66,7 @@ Ext.define('myMoney.controller.Acciones', {
 	showDetails: function(list, index, element, record){
 		switch(index){
 		case 0: 
-		Ext.Viewport.animateActiveItem(this.getTransaccion(), this.animacionIzq);
+			Ext.Viewport.animateActiveItem(this.getTransaccion(), this.animacionIzq);
 		break;
 		
 		case 1: this.getAcciones().push({ 
