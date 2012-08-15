@@ -1,6 +1,7 @@
 Ext.define('myMoney.model.Name', {
     extend: 'Ext.data.Model',
     requires: 'Ext.data.identifier.Uuid',
+	
     config: {
 		
 		identifier: {

@@ -1,7 +1,13 @@
 Ext.define('myMoney.model.Transaccion', {
     extend: 'Ext.data.Model',
-    
+    requires: 'Ext.data.identifier.Uuid',
+	
     config: {
+		
+		identifier: {
+			type: 'uuid'
+		},
+		
         fields: [
             {name: 'clasificacion', type: 'auto'},
             {name: 'descrip', type: 'auto'},

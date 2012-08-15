@@ -9,77 +9,63 @@ Ext.define('myMoney.controller.Acciones', {
 	    
 	config: {
         refs: {
-			acciones: 'acciones'
+			acciones: 'acciones',
+			transaccion: 'transaccion'
         },
         control: {
 			'acciones list':{
 				itemtap: 'showDetails'
+			},
+			
+			transaccion:{
+				needBack: 'needBack',
+				saveTransCommand: 'saveTransCommand'
 			}
         }
     },
 	
+	animacionIzq: {type: 'slide', direction: 'left'},
+	animacionDer: {type: 'slide', direction: 'right'},
+	
+	needBack: function(){
+		Ext.Viewport.animateActiveItem(this.getAcciones(), this.animacionDer)
+	},
+	
+	saveTransCommand: function(){
+		var model = this.getTransaccion();
+		var values = model.getValues();
+
+		var myInfo = Ext.create('myMoney.model.Transaccion', {
+			"clasificacion": values.clasificacion,
+			"descrip": values.descripcion,
+			"monto": values.monto,
+			"cuenta": values.cuenta,
+			"date": values.fecha
+		})
+
+		var error = myInfo.validate();
+
+		if(!error){
+			Ext.Msg.alert('Espera!', error.getByField('descrip')[0].getMessage(), Ext.emptyFn);
+			return;
+		}
+		
+		if(values.descripcion!=""){
+			var myStore = Ext.getStore('Transacciones');
+			myStore.add(myInfo)
+			myStore.sync();
+			Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');
+			model.reset();
+		}else{
+			Ext.Msg.alert('Espera!', 'La transaccion debe tener una descripcion');
+			model.reset();
+		}
+	},
+	
 	showDetails: function(list, index, element, record){
 		switch(index){
-		case 0: this.getAcciones().push({ //Permite desplegar una vista sobre la misma tap
-					xtype: 'formpanel',
-					styleHtmlContent: true,
-					title: record.get('title'),
-					url: 'consumo.php',
-					
-					items: [
-						{
-							xtype: 'fieldset',
-							title: 'Consumo',
-							instructions: '(Describa los detalles del consumo)',
-							
-							items: [
-								{
-									xtype: 'selectfield',
-									label: 'Clasificacion',
-									name: 'clasificacion',
-									store: 'Clasificacion',
-									displayField: 'name',
-									valueField: 'name'
-								},
-								{
-									xtype: 'textfield',
-									name: 'descripcion',
-									label: 'Descripcion'
-								},
-								{
-									xtype: 'numberfield',
-									label: 'Monto',
-									minvalue: 0.1,
-									name: 'monto'
-								},
-								{
-									xtype: 'selectfield',
-									label: 'Cuenta',
-									name: 'cuenta',
-									store: 'Cuentas',
-									displayField: 'name',
-									valueField: 'name',
-								},
-								{
-									xtype: 'datepickerfield',
-									label: 'Fecha',
-									name: 'fecha',
-									value: new Date()
-								}
-								
-							]
-						},
-						{
-							xtype: 'button',
-							text: 'Aceptar',
-							ui: 'confirm',
-							/*==================ENVIANDO DATOS DEL CONSUMO A LA BASE DE DATOS=======================*/
-							handler: function(){
-								this.up('formpanel').submit()
-							}
-						}
-					]
-		});
+		case 0: 
+		Ext.Viewport.animateActiveItem(this.getTransaccion(), this.animacionIzq);
 		break;
 		
 		case 1: this.getAcciones().push({ 

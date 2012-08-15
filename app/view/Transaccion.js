@@ -53,13 +53,34 @@ Ext.define('myMoney.view.Transaccion', {
 			xtype: 'button',
 			text: 'Aceptar',
 			ui: 'confirm',
-			handler: function(){
-				//console.log(this.up('formpanel').submit());
-			}
+			handler: this.saveTrans,
+			scope: this
 		};
 		
+		var buttonBack = {
+			xtype: 'button',
+			ui: 'back',
+			text: 'Acciones',
+			handler: this.regresar,
+			scope: this
+		};
 		
-		this.add({xtype: 'fieldset',
+		var topBar = {
+			xtype: 'toolbar',
+			docked: 'top',
+			title: 'Transaccion',
+			items: [buttonBack],
+		};
+		
+		this.add(topBar,{xtype: 'fieldset',
 					 items: [pClas, pDesc, pMont, pAcco, pDate]}, confirmButton);
+	},
+	
+	regresar: function(){
+		this.fireEvent('needBack')
+	},
+	
+	saveTrans: function(){
+		this.fireEvent('saveTransCommand')
 	}
 });

@@ -9,7 +9,7 @@ Ext.application({
 	stores: ['Contactos','Cuentas','Clasificacion','Transacciones', 'Notificaciones'],
     controllers: ["Historial", "Settings", "Agenda", "Inicio", "Acciones"],
     views: ['Main','Inicio','Acciones','Agenda','Settings','Historial','ListaContactos', 'ContactoEditor', 
-			'ListaN'],
+			'ListaN', 'Transaccion'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -36,7 +36,8 @@ Ext.application({
         // Initialize the main view
 		var principal = {xtype: 'mainView'};
 		var contactoEditor = {xtype: 'contactoEditor'};
-        Ext.Viewport.add([principal, contactoEditor]);
+		var transaccion = {xtype: 'transaccion'};
+        Ext.Viewport.add([principal, contactoEditor, transaccion]);
     },
 
     onUpdated: function() {

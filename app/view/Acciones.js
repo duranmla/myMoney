@@ -1,25 +1,30 @@
 Ext.define('myMoney.view.Acciones',{
-	extend: 'Ext.navigation.View',
-	fullscreen: true,
+	extend: 'Ext.Panel',
+    xtype: 'acciones',
+    fullscreen: true,
 	scrollable: true,
-	xtype: 'acciones',
-	
-	config: {
-		title: 'Acciones',
-		iconCls: 'compose',
-		
-		items: {
-			xtype: 'list',
-			fullscreen: true,
-			itemTpl: '{title}',
-			title: 'Transacciones',
-			styleHtmlContent: true,
-				
-			data: [
-				{ title: 'Transaccion Manual' },
-				{ title: 'Presupuesto'}
-			]
-		}
-	}
+
+
+    config: {
+        title: 'Acciones',
+        iconCls: 'compose',
+        layout: {
+            type: 'fit',
+        },
+
+        items: [
+			{xtype: 'titlebar', title: 'Acciones', docked: 'top'},
+            {
+                xtype: 'list',
+                itemTpl: '{item}',
+		        styleHtmlContent: true,
+
+                data: [
+                    {item: 'Transacciones'},
+                    {item: 'Presupuesto'},
+                ]
+            },
+        ]
+    }
 
 });

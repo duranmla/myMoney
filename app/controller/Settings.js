@@ -135,7 +135,8 @@ Ext.define('myMoney.controller.Settings', {
 								if (null == myStore.findRecord('name', value.classn)) {
 									myStore.add({name: value.classn});								
 								}else{
-									Ext.Msg.alert('Espera!', 'Esa clasificacion ya existe', Ext.emptyFn);
+									Ext.Msg.alert('Espera!', 'Esa '+msg+' ya existe', Ext.emptyFn);
+									Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');
 									newClass.reset();
 									return;
 								}

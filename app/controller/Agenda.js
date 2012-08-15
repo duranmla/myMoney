@@ -137,5 +137,7 @@ Ext.define('myMoney.controller.Agenda', {
 		Ext.getStore("Contactos").load();
 		Ext.getStore("Notificaciones").load();
 		Ext.getStore("Clasificacion").load();
+		Ext.getStore("Transacciones").load();
+		Ext.getStore("Cuentas").load();
     },
 });
