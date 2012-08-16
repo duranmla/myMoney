@@ -20,8 +20,8 @@ Ext.define('myMoney.view.Historial',{
 		        styleHtmlContent: true,
 
 				data: [
-					{title: 'Historico de Gastos'},
-					{title: 'Grafico de Gastos'}
+					{title: 'Ilustracion de Gastos'},
+					{title: 'Historial Listado'}
 				]
             },
         ]

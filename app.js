@@ -9,7 +9,7 @@ Ext.application({
 	stores: ['Contactos','Cuentas','Clasificacion','Transacciones', 'Notificaciones'],
     controllers: ["Historial", "Settings", "Agenda", "Inicio", "Acciones"],
     views: ['Main','Inicio','Acciones','Agenda','Settings','Historial','ListaContactos', 'ContactoEditor', 
-			'ListaN', 'Transaccion','HistTransacciones'],
+			'ListaN', 'Transaccion','HistorialGrafico', 'HistorialListado', 'Presupuesto'],
 
     icon: {
         '57': 'resources/icons/Icon.png',
@@ -37,8 +37,10 @@ Ext.application({
 		var principal = {xtype: 'mainView'};
 		var contactoEditor = {xtype: 'contactoEditor'};
 		var transaccion = {xtype: 'transaccion'};
-		var transHist = {xtype: 'transHist'};
-        Ext.Viewport.add([principal, contactoEditor, transaccion, transHist]);
+		var historialGrafico = {xtype: 'historialGrafico'};
+		var histList = {xtype: 'histList'};
+		var presupuesto = {xtype: 'presupuesto'};
+        Ext.Viewport.add([principal, contactoEditor, transaccion, historialGrafico, histList, presupuesto]);
     },
 
     onUpdated: function() {

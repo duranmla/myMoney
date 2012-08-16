@@ -123,33 +123,20 @@ Ext.define('myMoney.view.ContactoEditor', {
 		   scope: this,
 	   };
 		
-		var barraCc = {
-			xtype: 'toolbar',
-			title: 'Cuentas por Cobrar',
-			style: 'background:#74A204',
-			items: [actualizar, borrar, {xtype: 'spacer'}, agregar]
-		};
-		
-		var barraCp = {
-			xtype: 'toolbar',
-			title: 'Cuentas por Pagar',
-			items: [actualizar, borrar, {xtype: 'spacer'}, agregar]
-		};
-		
 		var lista = {
 			xtype: 'listac',
 			store: Ext.getStore('Contactos'),
 		};
 		//Fin de Interfaz de pagos y deudas
 		
-		this.add( topBar,
+		this.add([topBar,
 			{
 				xtype: 'fieldset', 
 				title: 'Datos',
 				instructions: 'Indique los datos del nuevo contacto',
 				items:[textNombre, textApellido, textTitle, textTlf, textEmail, banco, nroBanco]
 			},
-			bottomBar);
+			bottomBar]);
 	},
 	
 	//Funciones locales

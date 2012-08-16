@@ -6,7 +6,7 @@ Ext.define('myMoney.view.Agenda',{
 	scrollable: true,
 	
 	initialize: function() {
-		this.callParent(arguments);
+	   this.callParent(arguments);
 	   
 	   var actualizar = { 
 		   iconMask: true, 
@@ -49,7 +49,7 @@ Ext.define('myMoney.view.Agenda',{
 			},
 	   };
 	   
-	   this.add(topBar, listaContact);
+	   this.add([topBar, listaContact]);
 	},
 	
 		

@@ -10,7 +10,13 @@ Ext.define('myMoney.store.Transacciones',{
 			id: 'transaccionesid'
 		},
 		
-		sorters: [{property: 'date'}, {direction: 'DESC'}]
+		sorters: [{property: 'date'}, {direction: 'DESC'}],
+		
+		grouper: {
+			groupFn: function(record){
+				return record.get('clasificacion');
+			}
+		}
 	}
 
 });

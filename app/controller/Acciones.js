@@ -11,6 +11,7 @@ Ext.define('myMoney.controller.Acciones', {
         refs: {
 			acciones: 'acciones',
 			transaccion: 'transaccion',
+			presupuesto: 'presupuesto',
 			mainView: 'mainView'
         },
         control: {
@@ -21,6 +22,10 @@ Ext.define('myMoney.controller.Acciones', {
 			transaccion:{
 				needBack: 'needBack',
 				saveTransCommand: 'saveTransCommand'
+			},
+			
+			presupuesto: {
+				addFieldCommand: 'addFieldCommand'
 			}
         }
     },
@@ -30,6 +35,17 @@ Ext.define('myMoney.controller.Acciones', {
 	
 	needBack: function(){
 		Ext.Viewport.animateActiveItem(this.getMainView(), this.animacionDer)
+	},
+	
+	addFieldCommand: function(){
+		var field = {
+				xtype: 'numberfield',
+				label: 'Monto Mensual',
+				value: 0,
+				minValue: 0,
+		};
+		
+		Ext.getCmp('myFS').add(field);
 	},
 	
 	saveTransCommand: function(){
@@ -69,87 +85,8 @@ Ext.define('myMoney.controller.Acciones', {
 			Ext.Viewport.animateActiveItem(this.getTransaccion(), this.animacionIzq);
 		break;
 		
-		case 1: this.getAcciones().push({ 
-					xtype: 'container',
-					title: record.get('title'),
-					layout: {
-						type:'vbox',
-					},
-					defaults:{
-						width: '50%',
-						height: '50%',
-						flex:1,
-					},
-					
-					items: [
-					    {
-					    	xtype: 'button',
-							id: 'npButton',
-					    	text: '+ Nuevo Presupuesto',
-						    listeners: {
-								tap: function() {
-									overlay = Ext.Viewport.add({
-										xtype: 'panel',
-										scrollable: true,
-										modal: true,                  // Para hacerlo flotante
-										hideOnMaskTap: true,          // Para que al hacer click fuera del Panel este se cierre
-										centered: true,
-										width: '40%',
-										height: '80%',
-										items:[
-											{
-												docked: 'bottom',
-												xtype: 'titlebar',
-												items:[
-													{
-														xtype: 'button',
-														ui: 'normal',
-														text: 'Aceptar',
-														listeners : {
-															tap : function() {
-																overlay.hide(); // Para cerrar el Panel
-																Ext.Msg.alert("Plan Mensual Editado!");  
-															}
-														}
-													},  
-													{
-														xtype: 'button',
-														ui: 'normal',
-														text: 'Cancelar',
-														listeners : {
-															tap : function() {
-																overlay.hide();
-															}
-														}              
-													},                  
-												]
-											},
-											{
-												xtype: 'fieldset',
-												centered: true,
-												title: 'Plan Mensual',
-												items: [
-													{
-														xtype: 'textfield',
-														label: 'Titulo',
-														placeHolder: 'Nombre del parametro',
-														name: 'pDesc'
-													},
-													{
-														xtype: 'numberfield',
-														label: 'Monto',
-														placeHolder: 'Monto planificado',
-														name: 'pAmount'
-													}
-												]
-											},
-										]
-									});
-								}
-							}
-					    }
-					]
-				});
+		case 1: 
+			Ext.Viewport.animateActiveItem(this.getPresupuesto(), this.animacionIzq);
 		break;
 		}
 	},

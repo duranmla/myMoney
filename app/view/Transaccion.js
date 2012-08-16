@@ -72,8 +72,8 @@ Ext.define('myMoney.view.Transaccion', {
 			items: [buttonBack],
 		};
 		
-		this.add(topBar,{xtype: 'fieldset',
-					 items: [pClas, pDesc, pMont, pAcco, pDate]}, confirmButton);
+		this.add([topBar,{xtype: 'fieldset',
+					 items: [pClas, pDesc, pMont, pAcco, pDate]}, confirmButton]);
 	},
 	
 	regresar: function(){

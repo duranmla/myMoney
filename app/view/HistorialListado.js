@@ -1,9 +1,9 @@
-Ext.define('myMoney.view.HistorialGrafico', {
+Ext.define('myMoney.view.HistorialListado', {
 	extend: 'Ext.Panel',
-	alias: 'widget.historialGrafico',
+	alias: 'widget.histList',
 	
 	config: {
-		layout: 'fit'
+		layout: 'fit',
 	},
 	
 	initialize: function(){
@@ -20,17 +20,18 @@ Ext.define('myMoney.view.HistorialGrafico', {
 		var topBar = {
 			xtype: 'toolbar',
 			docked: 'top',
-			title: 'Hist. Ilustrado',
+			title: 'Hist. Listado',
 			
 			items: [backButton]
 		};
 		
 		var lista = {
 				xtype: 'list',
-                itemTpl: '{name}',
-				ui: 'round',
 		        styleHtmlContent: true,
-                store: Ext.getStore('Clasificacion')
+				grouped: true,
+                //itemTpl: '{clasificacion}:&nbsp;{descrip}&nbsp;&nbsp;{monto}Bsf',
+				itemTpl:'</pre><div class="list-item-title">{clasificacion}:&nbsp;{descrip}</div><div class="list-item-narrative">{monto}Bsf.</div><pre>',
+                store: Ext.getStore('Transacciones')
 		}
 		
 		this.add([topBar, lista]);
