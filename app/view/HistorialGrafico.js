@@ -27,10 +27,10 @@ Ext.define('myMoney.view.HistorialGrafico', {
 		
 		var lista = {
 				xtype: 'list',
-                itemTpl: '{name}',
+                itemTpl: '{name}&nbsp;Ideal:{monto}&nbsp;Acumulado{}',
 				ui: 'round',
 		        styleHtmlContent: true,
-                store: Ext.getStore('Clasificacion')
+                store: Ext.getStore('Presupuesto')
 		}
 		
 		this.add([topBar, lista]);
@@ -38,5 +38,9 @@ Ext.define('myMoney.view.HistorialGrafico', {
 	
 	backButtonTap: function(){
 		this.fireEvent('needBack')
+	},
+	
+	acumulado: function(){
+		
 	}
 });

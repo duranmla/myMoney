@@ -25,6 +25,5 @@ Ext.define('myMoney.view.Acciones',{
                 ]
             },
         ]
-    }
-
+    },
 });

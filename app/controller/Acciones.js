@@ -14,8 +14,6 @@ Ext.define('myMoney.controller.Acciones', {
 			transaccion: 'transaccion',
 			presupuesto: 'presupuesto',
 			mainView: 'mainView',
-
-			menuB: '#menuB',
 			
         },
         control: {
@@ -114,7 +112,7 @@ Ext.define('myMoney.controller.Acciones', {
 	
 	showMenuCommand: function(){
 		
-		var myMenu = Ext.Viewport.add({
+		myMenu = Ext.Viewport.add({
 			xtype: 'actionsheet',
 			items: [{text: 'Guardar',ui: 'confirm', handler: this.savePresupuesto, scope: this},
 					{text: 'Cancelar', handler: function(){myMenu.hide()}},
@@ -125,39 +123,39 @@ Ext.define('myMoney.controller.Acciones', {
 	
 	//Guardando Presupuesto
 	savePresupuesto: function(){
-		console.log('Guardando Presupuesto');
 		
 		var store = Ext.getStore('Presupuesto');
 		var model = this.getPresupuesto();
 		var values = model.getValues();
 		
-		//Monto base lo obtengo a traves de:
-		//var montoMensual = (model.getItems().map.myFSm.items.items[0]);
-		//var montoMensualStore = store.findRecord('name', montoMensual.getLabel());
-		//montoMensualStore.data.monto = montoMensual.getValue();
+		//Gestion del Monto base lo obtengo a traves de: (model.getItems().map.myFSm.items.items[0]);
+		
+		/*var montoMensual = (model.getItems().map.myFSm.items.items[0]);
+		if(null == store.findRecord('name', montoMensual.getName())){
+			store.add({name: montoMensual.getName()}, {monto: 0});
+		}else{
+			var index = store.findExact('name', montoMensual.getName());
+			var record = store.getAt(index);
+			record.set('monto', montoMensual.getValue());
+		}*/
 		
 		//Ruta de los Parametros del presupuesto y si se sustituye getLabel por getValue obtenemos el valor
 		//model.getItems().map.myFSp.items.items[0].getLabel()
 		
 		var info = model.getItems().map.myFSp.items.items;
-
 		for (i=0; i<store.getCount(); i++){
 			if(null != store.findRecord('name', info[i].getLabel())){
 				var index = store.findExact('name', info[i].getLabel());
 				var record = store.getAt(index);
 				record.set('monto', info[i].getValue());
-				console.log(record);
-				//var target = store.findRecord('name', info[i].getLabel());
-				//target.data.monto = info[i].getValue();
 			}
 		}
 		
 		store.sync();	
-
+		myMenu.hide();
 	},
 	
 	//Guardado de las Transacciones
-	
 	saveTransCommand: function(){
 		var model = this.getTransaccion();
 		var values = model.getValues();
@@ -190,7 +188,6 @@ Ext.define('myMoney.controller.Acciones', {
 	},
 	
 	//Menu de Acciones
-	
 	showDetails: function(list, index, element, record){
 		switch(index){
 		case 0: 

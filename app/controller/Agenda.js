@@ -140,6 +140,5 @@ Ext.define('myMoney.controller.Agenda', {
 		Ext.getStore("Transacciones").load();
 		Ext.getStore("Cuentas").load();
 		Ext.getStore("Presupuesto").load();
-		console.log('Stores Cargados!');
     },
 });
