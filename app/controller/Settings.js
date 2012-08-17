@@ -80,7 +80,7 @@ Ext.define('myMoney.controller.Settings', {
 	add: function(button, id){
 	if(button.getId() == 'addClass'){
 		var elStore = 'Clasificacion';
-		var msg = 'clasificacion'
+		var msg = 'categoria'
 	}else{
 		var elStore = 'Cuentas';
 		var msg = 'cuenta'

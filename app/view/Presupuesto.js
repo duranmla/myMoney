@@ -16,7 +16,9 @@ Ext.define('myMoney.view.Presupuesto', {
 		
 		var field = {
 			xtype: 'numberfield',
+			id: 'montoB',
 			label: 'Monto Mensual',
+			labelWidth: screen.availWidth/4,
 			value: 0,
 			minValue: 0,
 		};
@@ -25,17 +27,9 @@ Ext.define('myMoney.view.Presupuesto', {
 			xtype: 'segmentedbutton',
 
 			items: [
-			{text: 'Editar', ui: 'action'},
-			{text: 'Aceptar', ui: 'action'}
+			{text: 'Editar', ui: 'action', id: 'bEdita'},
+			{text: 'Aceptar', ui: 'action', id: 'bAcepta'}
 			]
-		};
-		
-		var addButton = {
-		   iconMask: true, 
-		   ui: 'plain', 
-		   iconCls: 'add',
-		   handler: this.addField,
-		   scope: this,
 		};
 		
 		var buttonReturn = {
@@ -44,17 +38,27 @@ Ext.define('myMoney.view.Presupuesto', {
 			text: 'Atras'
 		};
 		
+		var buttonRefresh = {
+			iconMask: true,
+			id: 'bRefresh',
+			ui: 'plain',
+			iconCls: 'refresh',
+			handler: this.fillParametres,
+			scope: this,
+		};
+		
 		var topBar = {
 			xtype: 'toolbar',
 			docked: 'top',
 			title: 'Presupuesto',
 			
-			items: [buttonReturn, {xtype: 'spacer'}, addButton]
+			items: [buttonReturn, {xtype: 'spacer'}, buttonRefresh]
 		};
 		
 		//Boton que muestra el menu
 		var menuButton = {
 			iconMask: true,
+			id: 'menuB',
 			ui: 'plain',
 			iconCls: 'organize',
 			handler: this.showMenu,
@@ -70,18 +74,15 @@ Ext.define('myMoney.view.Presupuesto', {
 		this.add([topBar,buttonEA,  
 				{xtype: 'fieldset', id: 'myFSm', title: 'Monto Base', instructions: 'Indique el monto mensual aproximado para la creacion del presupuesto', 
 				items: [field]},
-						  {xtype: 'fieldset', id: 'myFSp', title: 'Parametros', instructions: 'Valores ideales de gastos para el cumplimiento del presupuesto'}, bottomBar]);
-	},
-	
-	addField: function(){
-		this.fireEvent('addFieldCommand');
+				{xtype: 'fieldset', id: 'myFSp', title: 'Parametros', instructions: 'Valores ideales de gastos para el cumplimiento del presupuesto',
+				}, bottomBar]);
 	},
 	
 	showMenu: function(){
 		this.fireEvent('showMenuCommand');
 	},
 	
-	hideMenu: function(){
-		this.fireEvent('hideMenuCommand');
-	},
+	fillParametres: function(){
+		this.fireEvent('fillParametresCommand')
+	}
 });

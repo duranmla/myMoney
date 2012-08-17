@@ -14,6 +14,8 @@ Ext.define('myMoney.controller.Acciones', {
 			transaccion: 'transaccion',
 			presupuesto: 'presupuesto',
 			mainView: 'mainView',
+
+			menuB: '#menuB',
 			
         },
         control: {
@@ -27,8 +29,12 @@ Ext.define('myMoney.controller.Acciones', {
 			},
 			
 			presupuesto: {
-				addFieldCommand: 'addFieldCommand',
-				showMenuCommand: 'showMenuCommand'
+				showMenuCommand: 'showMenuCommand',
+				fillParametresCommand: 'fillParametresCommand'
+			},
+			
+			'presupuesto #bEdita': {
+				tap: 'editaPCommand'
 			}
         }
     },
@@ -43,6 +49,29 @@ Ext.define('myMoney.controller.Acciones', {
 	},
 	
 	//Editor de Presupuesto
+	fillParametresCommand: function(){
+		//Se incorporan las categorias del store dentro del fieldset de los parametros
+		var store = Ext.getStore('Clasificacion');
+		store.sync();
+		var dataClass = store.getData();
+		var nclass = new Array(store.getCount());	
+
+		for (i=0; i<store.getCount(); i++){		
+			var field = {
+				xtype: 'numberfield',
+				id: dataClass.all[i].data.name,
+				label: dataClass.all[i].data.name,
+				value: 0,
+				minValue: 0,
+			};
+		
+		Ext.getCmp('myFSp').add(field);
+		}
+	},
+	
+	editaPCommand: function(){
+		console.log('Editando Presupuesto');
+	},
 	
 	showMenuCommand: function(){
 		
@@ -53,25 +82,6 @@ Ext.define('myMoney.controller.Acciones', {
 					{text: 'Borrar',ui: 'decline'},
 			]	
 		});
-	},
-	
-	addFieldCommand: function(){
-		Ext.Msg.prompt(
-			'Nuevo Parametro',
-			'Inserta una descripcion del parametro',
-			function (buttonId, value) {
-				if(buttonId!='cancel'){
-				var field = {
-					xtype: 'numberfield',
-					id: value,
-					label: value,
-					value: 0,
-					minValue: 0,
-				};
-				Ext.getCmp('myFSp').add(field);}		
-			},
-			{placeHolder : 'Titulo'}
-		);
 	},
 	
 	//Guardado de las Transacciones
