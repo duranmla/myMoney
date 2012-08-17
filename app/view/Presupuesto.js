@@ -35,7 +35,9 @@ Ext.define('myMoney.view.Presupuesto', {
 		var buttonReturn = {
 			xtype: 'button',
 			ui: 'back',
-			text: 'Atras'
+			text: 'Atras',
+			handler: this.backView,
+			scope: this
 		};
 		
 		var buttonRefresh = {
@@ -83,6 +85,10 @@ Ext.define('myMoney.view.Presupuesto', {
 	},
 	
 	fillParametres: function(){
-		this.fireEvent('fillParametresCommand')
+		this.fireEvent('fillParametresCommand');
+	},
+	
+	backView: function(){
+		this.fireEvent('backViewCommand');
 	}
 });

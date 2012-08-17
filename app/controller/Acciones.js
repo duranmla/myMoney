@@ -30,7 +30,8 @@ Ext.define('myMoney.controller.Acciones', {
 			
 			presupuesto: {
 				showMenuCommand: 'showMenuCommand',
-				fillParametresCommand: 'fillParametresCommand'
+				fillParametresCommand: 'fillParametresCommand',
+				backViewCommand: 'needBack'
 			},
 			
 			'presupuesto #bEdita': {
@@ -42,8 +43,29 @@ Ext.define('myMoney.controller.Acciones', {
 	animacionIzq: {type: 'slide', direction: 'left'},
 	animacionDer: {type: 'slide', direction: 'right'},
 	
-	//Regresar al menu de acciones
+	//Funcion de ayuda
+	buildStorePresupuesto: function(dataClass){
+
+		var store = Ext.getStore('Presupuesto');
+		
+		for (i=0; i<dataClass.all.length; i++){
+			if (null == store.findRecord('name', dataClass.all[i].data.name)) {
+				store.add({name: dataClass.all[i].data.name,
+				 			mount: 0});
+			}
+		}
+		
+		store.sync();
+	},
 	
+	getData: function(theStore){
+		var store = Ext.getStore(theStore);
+		var dataClass = store.getData();
+		
+		return dataClass;
+	},
+	
+	//Regresar al menu de acciones
 	needBack: function(){
 		Ext.Viewport.animateActiveItem(this.getMainView(), this.animacionDer)
 	},
@@ -51,17 +73,20 @@ Ext.define('myMoney.controller.Acciones', {
 	//Editor de Presupuesto
 	fillParametresCommand: function(){
 		//Se incorporan las categorias del store dentro del fieldset de los parametros
-		var store = Ext.getStore('Clasificacion');
-		store.sync();
-		var dataClass = store.getData();
-		var nclass = new Array(store.getCount());	
-
-		for (i=0; i<store.getCount(); i++){		
+		var dataClass = this.getData('Clasificacion');
+		
+		this.buildStorePresupuesto(dataClass);
+		
+		var dataClass = this.getData('Presupuesto');
+		
+		Ext.getCmp('myFSp').removeAll(true, true);
+		
+		for (i=0; i<dataClass.all.length; i++){		
 			var field = {
 				xtype: 'numberfield',
 				id: dataClass.all[i].data.name,
 				label: dataClass.all[i].data.name,
-				value: 0,
+				value: dataClass.all[i].data.monto,
 				minValue: 0,
 			};
 		

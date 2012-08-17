@@ -5,8 +5,8 @@ Ext.application({
         'Ext.MessageBox'
     ],
 
-    models: ["Transaccion", "Name", "Contactos", "Notificaciones"],
-	stores: ['Contactos','Cuentas','Clasificacion','Transacciones', 'Notificaciones'],
+    models: ["Transaccion", "Name", "Contactos", "Notificaciones", "Presupuesto"],
+	stores: ['Contactos','Cuentas','Clasificacion','Transacciones', 'Notificaciones', 'Presupuesto'],
     controllers: ["Historial", "Settings", "Agenda", "Inicio", "Acciones"],
     views: ['Main','Inicio','Acciones','Agenda','Settings','Historial','ListaContactos', 'ContactoEditor', 
 			'ListaN', 'Transaccion','HistorialGrafico', 'HistorialListado', 'Presupuesto'],
