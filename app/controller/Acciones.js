@@ -5,6 +5,7 @@ Ext.define('myMoney.controller.Acciones', {
 		'Ext.field.Select',
 		'Ext.field.Number',
 		'Ext.field.DatePicker',
+		'Ext.ActionSheet'
 	],
 	    
 	config: {
@@ -13,7 +14,7 @@ Ext.define('myMoney.controller.Acciones', {
 			transaccion: 'transaccion',
 			presupuesto: 'presupuesto',
 			mainView: 'mainView',
-			myMenu: '#myMenu',
+			
         },
         control: {
 			'acciones list':{
@@ -34,7 +35,6 @@ Ext.define('myMoney.controller.Acciones', {
 	
 	animacionIzq: {type: 'slide', direction: 'left'},
 	animacionDer: {type: 'slide', direction: 'right'},
-	animacionUp: {type: 'slide', direction: 'top'},
 	
 	//Regresar al menu de acciones
 	
@@ -45,7 +45,14 @@ Ext.define('myMoney.controller.Acciones', {
 	//Editor de Presupuesto
 	
 	showMenuCommand: function(){
-		console.log('Muestra Menu!');
+		
+		var myMenu = Ext.Viewport.add({
+			xtype: 'actionsheet',
+			items: [{text: 'Guardar',ui: 'confirm'},
+					{text: 'Cancelar', handler: function(){myMenu.hide()}},
+					{text: 'Borrar',ui: 'decline'},
+			]	
+		});
 	},
 	
 	addFieldCommand: function(){

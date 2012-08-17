@@ -38,45 +38,26 @@ Ext.define('myMoney.view.Presupuesto', {
 		   scope: this,
 		};
 		
+		var buttonReturn = {
+			xtype: 'button',
+			ui: 'back',
+			text: 'Atras'
+		};
+		
 		var topBar = {
 			xtype: 'toolbar',
 			docked: 'top',
 			title: 'Presupuesto',
 			
-			items: [{xtype: 'spacer'}, addButton]
+			items: [buttonReturn, {xtype: 'spacer'}, addButton]
 		};
-		
-		//Items del Menu desplegable
-		var buttonSave = {
-			xtype: 'button',
-			ui: 'confirm',
-			text: 'Guardar'
-		};
-		
-		var buttonCancel = {
-			xtype: 'button',
-			text: 'Cancel'
-		};
-		
-		var buttonDelete = {
-			xtype: 'button',
-			ui: 'decline',
-			text: 'Guardar'
-		};
-		//Menu de opciones desplegable
-		var menu = {
-			xtype: 'panel',
-			id: 'myMenu',
-			
-			items: [buttonSave, buttonCancel, buttonDelete]
-		}
 		
 		//Boton que muestra el menu
 		var menuButton = {
 			iconMask: true,
 			ui: 'plain',
 			iconCls: 'organize',
-			handler: this.showMenu(),
+			handler: this.showMenu,
 			scope: this,
 		};
 		
