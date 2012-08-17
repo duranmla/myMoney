@@ -12,7 +12,8 @@ Ext.define('myMoney.controller.Acciones', {
 			acciones: 'acciones',
 			transaccion: 'transaccion',
 			presupuesto: 'presupuesto',
-			mainView: 'mainView'
+			mainView: 'mainView',
+			myMenu: '#myMenu',
         },
         control: {
 			'acciones list':{
@@ -25,28 +26,48 @@ Ext.define('myMoney.controller.Acciones', {
 			},
 			
 			presupuesto: {
-				addFieldCommand: 'addFieldCommand'
+				addFieldCommand: 'addFieldCommand',
+				showMenuCommand: 'showMenuCommand'
 			}
         }
     },
 	
 	animacionIzq: {type: 'slide', direction: 'left'},
 	animacionDer: {type: 'slide', direction: 'right'},
+	animacionUp: {type: 'slide', direction: 'top'},
+	
+	//Regresar al menu de acciones
 	
 	needBack: function(){
 		Ext.Viewport.animateActiveItem(this.getMainView(), this.animacionDer)
 	},
 	
-	addFieldCommand: function(){
-		var field = {
-				xtype: 'numberfield',
-				label: 'Monto Mensual',
-				value: 0,
-				minValue: 0,
-		};
-		
-		Ext.getCmp('myFS').add(field);
+	//Editor de Presupuesto
+	
+	showMenuCommand: function(){
+		console.log('Muestra Menu!');
 	},
+	
+	addFieldCommand: function(){
+		Ext.Msg.prompt(
+			'Nuevo Parametro',
+			'Inserta una descripcion del parametro',
+			function (buttonId, value) {
+				if(buttonId!='cancel'){
+				var field = {
+					xtype: 'numberfield',
+					id: value,
+					label: value,
+					value: 0,
+					minValue: 0,
+				};
+				Ext.getCmp('myFSp').add(field);}		
+			},
+			{placeHolder : 'Titulo'}
+		);
+	},
+	
+	//Guardado de las Transacciones
 	
 	saveTransCommand: function(){
 		var model = this.getTransaccion();
@@ -78,6 +99,8 @@ Ext.define('myMoney.controller.Acciones', {
 			model.reset();
 		}
 	},
+	
+	//Menu de Acciones
 	
 	showDetails: function(list, index, element, record){
 		switch(index){

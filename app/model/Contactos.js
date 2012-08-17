@@ -21,6 +21,6 @@ Ext.define('myMoney.model.Contactos', {
 			{ type: 'presence', field: 'firstName', message: 'El contacto debe tener un nombre'},
 		],
 		
-		hasMany: 'Notificaciones'
+		//hasMany: 'Notificaciones'
     }
 });

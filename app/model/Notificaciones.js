@@ -16,6 +16,6 @@ Ext.define('myMoney.model.Notificaciones',{
 			{type: 'presence', field: 'title', message: 'Debe introducir un titulo'}
 		],
 		
-		belongsTo: 'Contactos'
+		//belongsTo: 'Contactos'
 	}
 });
