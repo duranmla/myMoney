@@ -36,6 +36,10 @@ Ext.define('myMoney.controller.Acciones', {
 			
 			'presupuesto #bEdita': {
 				tap: 'editaPCommand'
+			},
+			
+			'presupuesto #bAcepta': {
+				tap: 'editaPCommand'
 			}
         }
     },
@@ -51,11 +55,13 @@ Ext.define('myMoney.controller.Acciones', {
 		for (i=0; i<dataClass.all.length; i++){
 			if (null == store.findRecord('name', dataClass.all[i].data.name)) {
 				store.add({name: dataClass.all[i].data.name,
-				 			mount: 0});
+				 			monto: 0});
 			}
 		}
 		
 		store.sync();
+		
+		store.sort([{property: 'name'}, {direction: 'DESC'}]);
 	},
 	
 	getData: function(theStore){
@@ -84,29 +90,70 @@ Ext.define('myMoney.controller.Acciones', {
 		for (i=0; i<dataClass.all.length; i++){		
 			var field = {
 				xtype: 'numberfield',
-				id: dataClass.all[i].data.name,
+				name: dataClass.all[i].data.name,
 				label: dataClass.all[i].data.name,
 				value: dataClass.all[i].data.monto,
 				minValue: 0,
 			};
 		
 		Ext.getCmp('myFSp').add(field);
+		Ext.getCmp('myFSp').setDisabled(true);
+		Ext.getCmp('myFSm').setDisabled(true);
 		}
 	},
 	
-	editaPCommand: function(){
-		console.log('Editando Presupuesto');
+	editaPCommand: function(button){
+		if(button.getId()=='bEdita'){
+			Ext.getCmp('myFSp').setDisabled(false);
+			Ext.getCmp('myFSm').setDisabled(false);
+		}else{
+			Ext.getCmp('myFSp').setDisabled(true);
+			Ext.getCmp('myFSm').setDisabled(true);
+		}
 	},
 	
 	showMenuCommand: function(){
 		
 		var myMenu = Ext.Viewport.add({
 			xtype: 'actionsheet',
-			items: [{text: 'Guardar',ui: 'confirm'},
+			items: [{text: 'Guardar',ui: 'confirm', handler: this.savePresupuesto, scope: this},
 					{text: 'Cancelar', handler: function(){myMenu.hide()}},
 					{text: 'Borrar',ui: 'decline'},
 			]	
 		});
+	},
+	
+	//Guardando Presupuesto
+	savePresupuesto: function(){
+		console.log('Guardando Presupuesto');
+		
+		var store = Ext.getStore('Presupuesto');
+		var model = this.getPresupuesto();
+		var values = model.getValues();
+		
+		//Monto base lo obtengo a traves de:
+		//var montoMensual = (model.getItems().map.myFSm.items.items[0]);
+		//var montoMensualStore = store.findRecord('name', montoMensual.getLabel());
+		//montoMensualStore.data.monto = montoMensual.getValue();
+		
+		//Ruta de los Parametros del presupuesto y si se sustituye getLabel por getValue obtenemos el valor
+		//model.getItems().map.myFSp.items.items[0].getLabel()
+		
+		var info = model.getItems().map.myFSp.items.items;
+
+		for (i=0; i<store.getCount(); i++){
+			if(null != store.findRecord('name', info[i].getLabel())){
+				var index = store.findExact('name', info[i].getLabel());
+				var record = store.getAt(index);
+				record.set('monto', info[i].getValue());
+				console.log(record);
+				//var target = store.findRecord('name', info[i].getLabel());
+				//target.data.monto = info[i].getValue();
+			}
+		}
+		
+		store.sync();	
+
 	},
 	
 	//Guardado de las Transacciones

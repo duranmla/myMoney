@@ -1,5 +1,5 @@
 Ext.define('myMoney.view.Presupuesto', {
-	extend: 'Ext.Panel',
+	extend: 'Ext.form.Panel',
 	alias: 'widget.presupuesto',
 	
 	requires: ['Ext.SegmentedButton'],
@@ -16,9 +16,8 @@ Ext.define('myMoney.view.Presupuesto', {
 		
 		var field = {
 			xtype: 'numberfield',
-			id: 'montoB',
+			name: 'montoBase',
 			label: 'Monto Mensual',
-			labelWidth: screen.availWidth/4,
 			value: 0,
 			minValue: 0,
 		};
@@ -28,7 +27,7 @@ Ext.define('myMoney.view.Presupuesto', {
 
 			items: [
 			{text: 'Editar', ui: 'action', id: 'bEdita'},
-			{text: 'Aceptar', ui: 'action', id: 'bAcepta'}
+			{text: 'Bloquear', ui: 'action', id: 'bAcepta'}
 			]
 		};
 		
@@ -78,6 +77,8 @@ Ext.define('myMoney.view.Presupuesto', {
 				items: [field]},
 				{xtype: 'fieldset', id: 'myFSp', title: 'Parametros', instructions: 'Valores ideales de gastos para el cumplimiento del presupuesto',
 				}, bottomBar]);
+				
+		this.fillParametres();
 	},
 	
 	showMenu: function(){
