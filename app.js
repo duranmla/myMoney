@@ -2,11 +2,11 @@ Ext.application({
     name: 'myMoney',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox', 'Ext.TitleBar'
     ],
 
     models: ["Transaccion", "Name", "Contactos", "Notificaciones", "Presupuesto"],
-	stores: ['Contactos','Cuentas','Clasificacion','Transacciones', 'Notificaciones', 'Presupuesto'],
+	stores: ['Contactos','Cuentas','Transacciones', 'Notificaciones', 'Presupuestos', 'Categorias'],
     controllers: ["Historial", "Settings", "Agenda", "Inicio", "Acciones"],
     views: ['Main','Inicio','Acciones','Agenda','Settings','Historial','ListaContactos', 'ContactoEditor', 
 			'ListaN', 'Transaccion','HistorialGrafico', 'HistorialListado', 'Presupuesto'],

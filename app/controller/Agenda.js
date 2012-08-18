@@ -135,10 +135,10 @@ Ext.define('myMoney.controller.Agenda', {
 	launch: function () {
         this.callParent();
 		Ext.getStore("Contactos").load();
-		Ext.getStore("Notificaciones").load();
-		Ext.getStore("Clasificacion").load();
+		//Ext.getStore("Notificaciones").load();
+		Ext.getStore("Categorias").load();
 		Ext.getStore("Transacciones").load();
 		Ext.getStore("Cuentas").load();
-		Ext.getStore("Presupuesto").load();
+		Ext.getStore("Presupuestos").load();
     },
 });

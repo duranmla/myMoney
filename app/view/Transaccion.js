@@ -1,10 +1,11 @@
 Ext.define('myMoney.view.Transaccion', {
 	extend: 'Ext.form.Panel',
 	alias: 'widget.transaccion',
+	id: 'tView',
 	
 	config: {
 		styleHtmlContent: true,
-		url: 'consumo.php',
+//		url: 'consumo.php',
 	},
 	
 	initialize: function(){
@@ -12,9 +13,9 @@ Ext.define('myMoney.view.Transaccion', {
 		
 		var pClas = {
 			xtype: 'selectfield',
-			label: 'Clasificacion',
+			label: 'Categoria',
 			name: 'clasificacion',
-			store: 'Clasificacion',
+			store: 'Categorias',
 			displayField: 'name',
 			valueField: 'name'
 		};
@@ -29,7 +30,7 @@ Ext.define('myMoney.view.Transaccion', {
 			xtype: 'numberfield',
 			label: 'Monto',
 			minvalue: 0.1,
-			name: 'monto'
+			name: 'monto',
 		};
 		
 		var pAcco = {
@@ -82,5 +83,5 @@ Ext.define('myMoney.view.Transaccion', {
 	
 	saveTrans: function(){
 		this.fireEvent('saveTransCommand')
-	}
+	},
 });

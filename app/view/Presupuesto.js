@@ -78,7 +78,7 @@ Ext.define('myMoney.view.Presupuesto', {
 				{xtype: 'fieldset', id: 'myFSp', title: 'Parametros', instructions: 'Valores ideales de gastos para el cumplimiento del presupuesto',
 				}, bottomBar]);
 				
-		this.fillParametres();
+		//this.fillParametres();
 	},
 	
 	showMenu: function(){

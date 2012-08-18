@@ -1,4 +1,4 @@
-Ext.define('myMoney.store.Cuentas',{
+Ext.define('myMoney.store.Categorias',{
 	extend: 'Ext.data.Store',
 	requires:"Ext.data.proxy.LocalStorage",
 	
@@ -8,7 +8,7 @@ Ext.define('myMoney.store.Cuentas',{
 		
 		proxy: {
             type: 'localstorage',
-            id: 'data-cuentas-id'
+            id: 'data-categorias-id'
         },
 		
 		sorters: [{property: 'name'}, {direction: 'DESC'}],

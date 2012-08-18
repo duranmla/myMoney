@@ -4,7 +4,12 @@ Ext.define('myMoney.store.Notificaciones',{
 	config:{
 		model: 'myMoney.model.Notificaciones',
 		autoLoad: true,
-		
+				
+		proxy: {
+			type: 'localstorage',
+			id: 'data-notificaciones-id'
+		},
+				
 		sorters: [{	property: 'fecha'}],
 		
 		grouper: {
@@ -12,10 +17,5 @@ Ext.define('myMoney.store.Notificaciones',{
 				return record.get('fecha');
 			}
 		},
-				
-		proxy: {
-			type: 'localstorage',
-			id: 'notificacionesid'
-		}
 	}
 });

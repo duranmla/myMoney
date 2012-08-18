@@ -45,24 +45,9 @@ Ext.define('myMoney.controller.Acciones', {
 	animacionIzq: {type: 'slide', direction: 'left'},
 	animacionDer: {type: 'slide', direction: 'right'},
 	
-	//Funcion de ayuda
-	buildStorePresupuesto: function(dataClass){
-
-		var store = Ext.getStore('Presupuesto');
-		
-		for (i=0; i<dataClass.all.length; i++){
-			if (null == store.findRecord('name', dataClass.all[i].data.name)) {
-				store.add({name: dataClass.all[i].data.name,
-				 			monto: 0});
-			}
-		}
-		
-		store.sync();
-		
-		store.sort([{property: 'name'}, {direction: 'DESC'}]);
-	},
+	//Funciones de ayuda
 	
-	getData: function(theStore){
+	getTheData: function(theStore){
 		var store = Ext.getStore(theStore);
 		var dataClass = store.getData();
 		
@@ -77,11 +62,7 @@ Ext.define('myMoney.controller.Acciones', {
 	//Editor de Presupuesto
 	fillParametresCommand: function(){
 		//Se incorporan las categorias del store dentro del fieldset de los parametros
-		var dataClass = this.getData('Clasificacion');
-		
-		this.buildStorePresupuesto(dataClass);
-		
-		var dataClass = this.getData('Presupuesto');
+		var dataClass = this.getTheData('Presupuesto');
 		
 		Ext.getCmp('myFSp').removeAll(true, true);
 		
@@ -120,6 +101,7 @@ Ext.define('myMoney.controller.Acciones', {
 			]	
 		});
 	},
+	
 	
 	//Guardando Presupuesto
 	savePresupuesto: function(){
@@ -167,7 +149,7 @@ Ext.define('myMoney.controller.Acciones', {
 			"cuenta": values.cuenta,
 			"date": values.fecha
 		})
-
+		
 		var error = myInfo.validate();
 
 		if(!error){

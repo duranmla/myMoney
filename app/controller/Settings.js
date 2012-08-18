@@ -27,7 +27,7 @@ Ext.define('myMoney.controller.Settings', {
 		
 	show: function(button, id){
 	if(button.getId() == 'verClass'){
-		var elStore = 'Clasificacion';
+		var elStore = 'Categorias';
 	}else{
 		var elStore = 'Cuentas';
 	}
@@ -79,20 +79,22 @@ Ext.define('myMoney.controller.Settings', {
 	
 	add: function(button, id){
 	if(button.getId() == 'addClass'){
-		var elStore = 'Clasificacion';
+		var elStore = 'Categorias';
 		var msg = 'categoria'
+		console.log('Agrego en Categoria');
 	}else{
 		var elStore = 'Cuentas';
 		var msg = 'cuenta'
+		console.log('Agrego en Cuenta');
 	}
-	
+		//Agrego una pequena ventana para introducir los datos.
 		var newClass = Ext.Viewport.add({
 			xtype: 'formpanel',
 			hideOnMaskTap: true,
 			modal: true,
 			centered: true,
 			width: screen.availWidth/2,
-			height: screen.availHeight/4,
+			height: screen.availHeight/2,
 			
 			items: [
 				{
@@ -114,15 +116,17 @@ Ext.define('myMoney.controller.Settings', {
 							handler: function(){newClass.hide()}
 						},{xtype: 'spacer'},
 						{
+							//Boton que permite el guardado de la informacion
 							xtype: 'button',
 							text: 'Guardar',
 							handler: function(){
 								
 								var value = newClass.getValues();
 								var newClassInfo = Ext.create("myMoney.model.Name", {
-									name: value.classn,
+									name: value.classn,//El valor del campo que se acaba de llenar
 								});
 								
+								//Validacion de errores
 								var errors = newClassInfo.validate();
 		
 								if (!errors.isValid()) {
@@ -131,9 +135,16 @@ Ext.define('myMoney.controller.Settings', {
 								}
 								
 								var myStore = Ext.getStore(elStore);
-
+								
+								//Se busca coincidencias del mismo nombre para asi evitar solapamientos
 								if (null == myStore.findRecord('name', value.classn)) {
-									myStore.add({name: value.classn});								
+									myStore.add({name: value.classn});
+										//Aqui se asegura que el store de Presupuesto tenga todas las categorias agregadas
+										if(elStore = 'Categorias'){
+											var storeP = Ext.getStore('Presupuestos');
+											storeP.add({name: value.classn, monto: 0});
+											storeP.sync();
+										}								
 								}else{
 									Ext.Msg.alert('Espera!', 'Esa '+msg+' ya existe', Ext.emptyFn);
 									Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');

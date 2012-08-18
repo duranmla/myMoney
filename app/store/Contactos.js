@@ -5,7 +5,12 @@ Ext.define('myMoney.store.Contactos', {
     config: {
         model: 'myMoney.model.Contactos',
         autoLoad: true,
-        
+		
+        proxy: {
+            type: 'localstorage',
+			id: 'data-contactos-id'
+        },
+		
 		sorters: [{	property: 'firstName'}, {direction: 'DESC'}],
         
 		grouper: {
@@ -13,10 +18,5 @@ Ext.define('myMoney.store.Contactos', {
                 return record.get('firstName')[0];
             }
         },
-		
-        proxy: {
-            type: 'localstorage',
-			id: 'contactosid'
-        }
     }
 });

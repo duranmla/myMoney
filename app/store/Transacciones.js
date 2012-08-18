@@ -7,7 +7,7 @@ Ext.define('myMoney.store.Transacciones',{
 		
 		proxy: {
 			type: 'localstorage',
-			id: 'transaccionesid'
+			id: 'data-transacciones-id'
 		},
 		
 		sorters: [{property: 'date'}, {direction: 'DESC'}],
