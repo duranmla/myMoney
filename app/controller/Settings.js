@@ -90,6 +90,7 @@ Ext.define('myMoney.controller.Settings', {
 		//Agrego una pequena ventana para introducir los datos.
 		var newClass = Ext.Viewport.add({
 			xtype: 'formpanel',
+			layout: {type: 'vbox', pack: 'center', align: 'Stretch'},
 			hideOnMaskTap: true,
 			modal: true,
 			centered: true,

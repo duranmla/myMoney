@@ -42,11 +42,19 @@ Ext.define('myMoney.view.Transaccion', {
 			valueField: 'name',
 		};
 		
+		//Fecha actual
+		var myDateNow = new Date();
+		
+		var myPicker = {
+			xtype: 'myCal'
+		};
+		
 		var pDate = {
 			xtype: 'datepickerfield',
 			label: 'Fecha',
 			name: 'fecha',
-			value: new Date()
+			picker: myPicker,
+			value: myDateNow
 		};
 		
 		//Boton para el almacenamiento de datos

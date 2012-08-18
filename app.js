@@ -9,7 +9,7 @@ Ext.application({
 	stores: ['Contactos','Cuentas','Transacciones', 'Notificaciones', 'Presupuestos', 'Categorias'],
     controllers: ["Historial", "Settings", "Agenda", "Inicio", "Acciones"],
     views: ['Main','Inicio','Acciones','Agenda','Settings','Historial','ListaContactos', 'ContactoEditor', 
-			'ListaN', 'Transaccion','HistorialGrafico', 'HistorialListado', 'Presupuesto'],
+			'ListaN', 'Transaccion','HistorialGrafico', 'HistorialListado', 'Presupuesto', 'MyCal'],
 
     icon: {
         '57': 'resources/icons/Icon.png',

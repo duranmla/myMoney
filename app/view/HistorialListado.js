@@ -28,10 +28,13 @@ Ext.define('myMoney.view.HistorialListado', {
 		var lista = {
 				xtype: 'list',
 		        styleHtmlContent: true,
+                store: Ext.getStore('Transacciones'),
+				
+		        loadingText: "Cargando Transacciones...",
+		        emptyText: '</pre> <div class="notes-list-empty-text">Sin Transacciones.</div> <pre>',
 				grouped: true,
-                //itemTpl: '{clasificacion}:&nbsp;{descrip}&nbsp;&nbsp;{monto}Bsf',
-				itemTpl:'</pre><div class="list-item-title">{clasificacion}:&nbsp;{descrip}</div><div class="list-item-narrative">{monto}Bsf.</div><pre>',
-                store: Ext.getStore('Transacciones')
+				itemTpl:'</pre><div class="list-item-title">{descrip}</div><div class="list-item-narrative">{monto}&nbsp;Bsf.</div><pre>',
+                
 		}
 		
 		this.add([topBar, lista]);
