@@ -52,6 +52,7 @@ Ext.define('myMoney.view.Transaccion', {
 		var pDate = {
 			xtype: 'datepickerfield',
 			label: 'Fecha',
+			id: 'picDate',
 			name: 'fecha',
 			picker: myPicker,
 			value: myDateNow

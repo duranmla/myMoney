@@ -4,6 +4,7 @@ Ext.define('myMoney.controller.Settings', {
     config: {
         refs: {
             settings: 'configuracion',
+			presupuesto: 'presupuesto',
         },
         control: {
 			
@@ -24,7 +25,7 @@ Ext.define('myMoney.controller.Settings', {
 
         }
     },
-		
+
 	show: function(button, id){
 	if(button.getId() == 'verClass'){
 		var elStore = 'Categorias';
@@ -145,15 +146,18 @@ Ext.define('myMoney.controller.Settings', {
 											var storeP = Ext.getStore('Presupuestos');
 											storeP.add({name: value.classn, monto: 0});
 											storeP.sync();
-										}								
+											
+											//Actualizo los parametros del presupuesto porque se agrego una categoria
+											Ext.getCmp('presId').fillParametres();										
+										}
+									myStore.sync();
+									Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');
+									newClass.reset();								
 								}else{
 									Ext.Msg.alert('Espera!', 'Esa '+msg+' ya existe', Ext.emptyFn);
-									Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');
-									newClass.reset();
 									return;
 								}
-								
-								myStore.sync();
+		
 								newClass.hide();
 							}
 							

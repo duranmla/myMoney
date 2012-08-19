@@ -14,7 +14,7 @@ Ext.define('myMoney.store.Transacciones',{
 		
 		grouper: {
 			groupFn: function(record){
-				return record.get('clasificacion');
+				return record.get('date');
 			}
 		}
 	}

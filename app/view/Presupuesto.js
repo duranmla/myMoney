@@ -1,6 +1,7 @@
 Ext.define('myMoney.view.Presupuesto', {
 	extend: 'Ext.form.Panel',
 	alias: 'widget.presupuesto',
+	id: 'presId',
 	
 	requires: ['Ext.SegmentedButton'],
 	
@@ -39,21 +40,12 @@ Ext.define('myMoney.view.Presupuesto', {
 			scope: this
 		};
 		
-		var buttonRefresh = {
-			iconMask: true,
-			id: 'bRefresh',
-			ui: 'plain',
-			iconCls: 'refresh',
-			handler: this.fillParametres,
-			scope: this,
-		};
-		
 		var topBar = {
 			xtype: 'toolbar',
 			docked: 'top',
 			title: 'Presupuesto',
 			
-			items: [buttonReturn, {xtype: 'spacer'}, buttonRefresh]
+			items: [buttonReturn, {xtype: 'spacer'}]
 		};
 		
 		//Boton que muestra el menu
@@ -78,7 +70,7 @@ Ext.define('myMoney.view.Presupuesto', {
 				{xtype: 'fieldset', id: 'myFSp', title: 'Parametros', instructions: 'Valores ideales de gastos para el cumplimiento del presupuesto',
 				}, bottomBar]);
 				
-		//this.fillParametres();
+		this.fillParametres();
 	},
 	
 	showMenu: function(){

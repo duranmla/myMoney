@@ -176,10 +176,10 @@ Ext.define('myMoney.view.MyCal', {
                 value: i
             });
         }
-
+		var ahora = new Date();	
+		var miDay = ahora.getDate();
         daysInMonth = this.getDaysInMonth(1, new Date().getFullYear());
-
-        for (i = 0; i < daysInMonth; i++) {
+        for (i = 0; i < miDay; i++) {
             days.push({
                 text: i + 1,
                 value: i + 1
@@ -187,7 +187,7 @@ Ext.define('myMoney.view.MyCal', {
         }
 
 		//Aqui estoy editando el mes para que solo muestre el mes actual y el anterior
-		var ahora = new Date();
+	
 		var miMes = ahora.getMonth();
 		var miMesCorto = Ext.Date.getShortMonthName(miMes);
 		var miNumMes = Ext.Date.monthNumbers[miMesCorto];
@@ -253,14 +253,28 @@ Ext.define('myMoney.view.MyCal', {
         }
 
         //get the new days of the month for this new date
+		//Hay que asegurarse que no tome una fecha en futuro
         daysInMonth = this.getDaysInMonth(month + 1, year);
-        for (i = 0; i < daysInMonth; i++) {
-            days.push({
-                text: i + 1,
-                value: i + 1
-            });
-        }
-
+		var ahora = new Date();
+		var miMes = ahora.getMonth();
+		
+		if(month!=miMes){
+			for (i = 0; i < daysInMonth; i++) {
+				days.push({
+					text: i + 1,
+					value: i + 1
+				});
+			}
+		}else{
+			var miDia = ahora.getDate();
+			for (i = 0; i < miDia; i++) {
+				days.push({
+					text: i + 1,
+					value: i + 1
+				});
+			}
+		}
+		
         // We dont need to update the slot days unless it has changed
         if (slot.getData().length == days.length) {
             return;
@@ -271,6 +285,7 @@ Ext.define('myMoney.view.MyCal', {
             viewItems = slot.getViewItems(),
             valueField = slot.getValueField(),
             index, item;
+			
 
         slot.setData(days);
 
@@ -280,7 +295,7 @@ Ext.define('myMoney.view.MyCal', {
         }
 
         item = Ext.get(viewItems[index]);
-
+		
         slot.selectedIndex = index;
         slot.scrollToItem(item);
 

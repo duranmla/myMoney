@@ -54,6 +54,54 @@ Ext.define('myMoney.controller.Acciones', {
 		return dataClass;
 	},
 	
+	translateMyDate: function(miMes, miDia, full){
+	//Meses
+	switch (miMes){
+		case 'Jan': miMes = 'Ene';
+		break;
+		case 'Feb': miMes = 'Feb';
+		break;
+		case 'Mar': miMes = 'Mar';
+		break;
+		case 'Apr': miMes = 'Abr';
+		break;
+		case 'May': miMes = 'May';
+		break;
+		case 'Jun': miMes = 'Jun';
+		break;
+		case 'Jul': miMes = 'Jul';
+		break;
+		case 'Aug': miMes = 'Ago';
+		break;
+		case 'Sep': miMes = 'Sep';
+		break;
+		case 'Oct': miMes = 'Oct';
+		break;
+		case 'Nov': miMes = 'Nov';
+		break;
+		case 'Dec': miMes = 'Dic';
+		break;
+	}
+	//Meses
+	switch (miDia){
+		case 'Mon': miDia = 'Lun';
+		break;
+		case 'Tue': miDia = 'Mar';
+		break;
+		case 'Wed': miDia = 'Mie';
+		break;
+		case 'Thu': miDia = 'Jue';
+		break;
+		case 'Fri': miDia = 'Vie';
+		break;
+		case 'Sat': miDia = 'Sab';
+		break;
+		case 'Sun': miDia = 'Dom';
+		break;
+	}
+	
+	},
+	
 	//Regresar al menu de acciones
 	needBack: function(){
 		Ext.Viewport.animateActiveItem(this.getMainView(), this.animacionDer)
@@ -62,7 +110,7 @@ Ext.define('myMoney.controller.Acciones', {
 	//Editor de Presupuesto
 	fillParametresCommand: function(){
 		//Se incorporan las categorias del store dentro del fieldset de los parametros
-		var dataClass = this.getTheData('Presupuesto');
+		var dataClass = this.getTheData('Presupuestos');
 		
 		Ext.getCmp('myFSp').removeAll(true, true);
 		
@@ -102,7 +150,6 @@ Ext.define('myMoney.controller.Acciones', {
 		});
 	},
 	
-	
 	//Guardando Presupuesto
 	savePresupuesto: function(){
 		
@@ -141,7 +188,15 @@ Ext.define('myMoney.controller.Acciones', {
 	saveTransCommand: function(){
 		var model = this.getTransaccion();
 		var values = model.getValues();
-
+		
+		//Formato de Fecha con mm/dd/yyyy
+		//console.log(model.getItems().items[1].items.items[4].getFormattedValue());
+		
+		//Se traduce la fecha:
+		//console.log(model.getItems().items[1].items.items[4].getValue());
+		
+		this.translateMyDate(values.fecha);
+		
 		var myInfo = Ext.create('myMoney.model.Transaccion', {
 			"clasificacion": values.clasificacion,
 			"descrip": values.descripcion,
