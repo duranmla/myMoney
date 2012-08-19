@@ -29,8 +29,11 @@ Ext.define('myMoney.controller.Settings', {
 			
 			'configuracion #addBank': {
 				tap: 'add'
+			},
+			
+			'configuracion #ordenPick': {
+				change: 'ordena'
 			}
-
         },
     },
 
@@ -198,4 +201,14 @@ Ext.define('myMoney.controller.Settings', {
 	},
 	
 	//Configurar historial listado
+	ordena: function(picker, valorNew, valorOld){
+		console.log(valorNew)
+		var store = Ext.getStore('Transacciones');
+//		store.setGroupDir('ASC').sort();
+		store.setGrouper(valorNew).sort();
+	},
+	
+	launch: function (){
+	
+	} 
 });

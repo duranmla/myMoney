@@ -28,7 +28,6 @@ Ext.define('myMoney.view.HistorialListado', {
 		var lista = {
 				xtype: 'list',
                 store: Ext.getStore('Transacciones'),
-				
 				onItemDisclosure: true,
 		        loadingText: "Cargando Transacciones...",
 		        emptyText: '</pre> <div class="notes-list-empty-text">Sin Transacciones.</div> <pre>',

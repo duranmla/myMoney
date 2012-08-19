@@ -11,10 +11,10 @@ Ext.define('myMoney.model.Transaccion', {
 		},
 		
         fields: [
-            {name: 'clasificacion', type: 'auto'},
-            {name: 'descripcion', type: 'auto'},
-			{name: 'monto', type: 'auto'},
-			{name: 'cuenta', type: 'auto'},
+            {name: 'clasificacion', type: 'string'},
+            {name: 'descripcion', type: 'string'},
+			{name: 'monto', type: 'float'},
+			{name: 'cuenta', type: 'string'},
 			{name: 'date', type: 'date', dateFormat: 'c'},
         ],
 		

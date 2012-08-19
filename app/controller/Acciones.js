@@ -35,7 +35,7 @@ Ext.define('myMoney.controller.Acciones', {
 			'presupuesto #lockB': {
 				tap: 'editaPCommand'
 			},
-        }
+        },
     },
 	
 	animacionIzq: {type: 'slide', direction: 'left'},
@@ -257,6 +257,7 @@ Ext.Msg.alert('Espera!', 'El monto acumulado en los parametros ('+acumulado+') e
 	
 	//Guardado de las Transacciones
 	saveTransCommand: function(){
+		var me = this;
 		var model = this.getTransaccion();
 		var valoresActuales = model.getRecord();
 		var values = model.getValues();
@@ -289,11 +290,12 @@ Ext.Msg.alert('Espera!', 'El monto acumulado en los parametros ('+acumulado+') e
 				'Los valores en blanco seran guardados con el nombre de "Otros" desea continuar?',
 				function(buttonId, value){
 					if(buttonId=='yes'){
-						valoresActuales.set('clasificacion', 'Otros'); valoresActuales.set('cuenta', 'Otros');
-						this.isTimeToSave(valoresActuales, model);
+						valoresActuales.set('clasificacion', 'Otros'); 
+						valoresActuales.set('cuenta', 'Otros');
+						me.isTimeToSave(valoresActuales, model);
 					}else{return;}
 				});
-			}else{this.isTimeToSave(valoresActuales, model);}
+			}else{me.isTimeToSave(valoresActuales, model);}
 		}
 	},
 	

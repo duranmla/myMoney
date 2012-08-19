@@ -6,7 +6,7 @@ Ext.define('myMoney.view.Settings',{
 	requires: ['Ext.field.Toggle', 'Ext.SegmentedButton'],
 	
 	config: {
-		title: 'Configuracion',
+		title: 'Configuración',
 		iconCls: 'settings',
 		scrollable: true,
 		styleHtmlContent: true,
@@ -24,7 +24,7 @@ Ext.define('myMoney.view.Settings',{
 			{
 				xtype: 'fieldset',
 				title: 'Permitir Sincronizacion Web',
-				instructions: 'Esta opcion debe estar habilitada para poseer respaldo de su informacion y permitir el acceso desde otros dispositivos (verifique su plan de datos)',
+				instructions: 'Esta opcion debe estar habilitada para poseer respaldo de su información y permitir el acceso desde otros dispositivos (verifique su plan de datos)',
 				items: [
 				    {
 					   	xtype: 'togglefield',
@@ -57,8 +57,8 @@ Ext.define('myMoney.view.Settings',{
 	        },
 			{
 				xtype: 'fieldset',
-				title: 'Configuracion de Categorias',
-				instructions: 'Elimine/Agregue Categorias',
+				title: 'Configuracion de Categorías',
+				instructions: 'Elimine/Agregue Categorías',
 				
 				items: [
 					{
@@ -68,7 +68,7 @@ Ext.define('myMoney.view.Settings',{
 							{
 								id: 'verClass',
 								ui: 'action',
-								text: 'Categorias',
+								text: 'Categorías',
 								width: screen.availWidth/2,
 								handler: function(){this.fireEvent('verClassCommand', this);} 
 							},
@@ -131,6 +131,28 @@ Ext.define('myMoney.view.Settings',{
 							ui: 'action',
 						}
 						]
+					}
+				]
+			},
+			{
+				xtype: 'fieldset',
+				title: 'Configuracion Historial Listado',
+				instructions: 'Configure el orden en el que se muestran las transacciones',
+				
+				items: [
+					{
+						xtype: 'selectfield',
+						id: 'ordenPick',
+						label: 'Ordenar por:',
+						labelWidth: screen.availWidth/4,
+						 
+                    		options: [
+								{text: 'Fecha',  value: 'date'},
+								{text: 'Categoría',  value: 'clasificacion'},
+								{text: 'Descripción', value: 'descripcion'},
+								{text: 'Monto',  value: 'monto'},
+								{text: 'Cuenta',  value: 'cuenta'},
+							],
 					}
 				]
 			}
