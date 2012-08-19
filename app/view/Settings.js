@@ -15,7 +15,7 @@ Ext.define('myMoney.view.Settings',{
 			align: 'center'
 		},
 		defaults: {
-			width: '50%',
+			width: screen.availWidth/2,
 			height: '50%',
 			flex:1,
 		},
@@ -69,14 +69,14 @@ Ext.define('myMoney.view.Settings',{
 								id: 'verClass',
 								ui: 'action',
 								text: 'Categorias',
-								width: screen.availWidth/4,
+								width: screen.availWidth/2,
 								handler: function(){this.fireEvent('verClassCommand', this);} 
 							},
 							{
 								id: 'addClass',
+								iconMask: true,
+								iconCls: 'add',
 								ui: 'action',
-								text: 'Nueva',
-								width: screen.availWidth/4,
 							}
 						]
 					}
@@ -96,13 +96,39 @@ Ext.define('myMoney.view.Settings',{
 							id: 'verAcc',
 							ui: 'action',
 							text: 'Cuentas',
-							width: screen.availWidth/4,
+							width: screen.availWidth/2,
 						},
 						{
 							id: 'addAcc',
+							iconMask: true,
+							iconCls: 'add',
 							ui: 'action',
-							text: 'Nueva',
-							width: screen.availWidth/4,
+						}
+						]
+					}
+				]
+			},
+			{
+				xtype: 'fieldset',
+				title: 'Configuracion de Bancos',
+				instructions: 'Elimine/Agregue Bancos',
+				
+				items: [
+					{
+						xtype: 'segmentedbutton',
+						
+						items: [
+						{
+							id: 'verBank',
+							ui: 'action',
+							text: 'Bancos',
+							width: screen.availWidth/2,
+						},
+						{
+							id: 'addBank',
+							iconMask: true,
+							iconCls: 'add',
+							ui: 'action',
 						}
 						]
 					}

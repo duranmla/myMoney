@@ -32,13 +32,9 @@ Ext.define('myMoney.controller.Acciones', {
 				backViewCommand: 'needBack'
 			},
 			
-			'presupuesto #bEdita': {
+			'presupuesto #lockB': {
 				tap: 'editaPCommand'
 			},
-			
-			'presupuesto #bAcepta': {
-				tap: 'editaPCommand'
-			}
         }
     },
 	
@@ -131,9 +127,16 @@ Ext.define('myMoney.controller.Acciones', {
 	
 	//Editor de Presupuesto
 	fillParametresCommand: function(){
+		//Configuro el campo de presupuesto
+		var dataClass = this.getTheData('MontoPresupuesto');
+		if(dataClass.all.length!=0){
+			var currentMont = dataClass.items[0].getData().monto;
+			Ext.getCmp('baseP').setValue(currentMont);
+		}
+		
+		
 		//Se incorporan las categorias del store dentro del fieldset de los parametros
 		var dataClass = this.getTheData('Presupuestos');
-		
 		Ext.getCmp('myFSp').removeAll(true, true);
 		
 		for (i=0; i<dataClass.all.length; i++){		
@@ -142,6 +145,7 @@ Ext.define('myMoney.controller.Acciones', {
 				name: dataClass.all[i].data.name,
 				label: dataClass.all[i].data.name,
 				value: dataClass.all[i].data.monto,
+				labelWidth: screen.availWidth/2,
 				minValue: 0,
 			};
 		
@@ -151,16 +155,20 @@ Ext.define('myMoney.controller.Acciones', {
 		}
 	},
 	
+	//Bloquea los fieldset
 	editaPCommand: function(button){
-		if(button.getId()=='bEdita'){
-			Ext.getCmp('myFSp').setDisabled(false);
-			Ext.getCmp('myFSm').setDisabled(false);
-		}else{
+		if(button.getText()=='Bloquear'){
+			button.setText('Editar');
 			Ext.getCmp('myFSp').setDisabled(true);
 			Ext.getCmp('myFSm').setDisabled(true);
+		}else{
+			button.setText('Bloquear');
+			Ext.getCmp('myFSp').setDisabled(false);
+			Ext.getCmp('myFSm').setDisabled(false);
 		}
 	},
 	
+	//Muestra Menu de Opciones
 	showMenuCommand: function(){
 		
 		myMenu = Ext.Viewport.add({
@@ -175,30 +183,71 @@ Ext.define('myMoney.controller.Acciones', {
 	//Guardando Presupuesto
 	savePresupuesto: function(){
 		
-		var store = Ext.getStore('Presupuesto');
 		var model = this.getPresupuesto();
 		var values = model.getValues();
 		
-		//Gestion del Monto base lo obtengo a traves de: (model.getItems().map.myFSm.items.items[0]);
+		var store = Ext.getStore('MontoPresupuesto');
 		
-		/*var montoMensual = (model.getItems().map.myFSm.items.items[0]);
+		//Gestion del Monto base lo obtengo a traves de: (model.getItems().map.myFSm.items.items[0]);
+		var montoMensual = (model.getItems().map.myFSm.items.items[0]);
+		
+		var infoModel = Ext.create('myMoney.model.Presupuesto',{
+			name: montoMensual.getName(),
+			monto: montoMensual.getValue()
+		})
+		
+		var errors = infoModel.validate();
+		
+		if(errors.length!=0){
+			Ext.Msg.alert('Espera!', errors.items[0].getMessage(), Ext.emptyFn);
+			myMenu.hide();
+			return;
+		}
+		
 		if(null == store.findRecord('name', montoMensual.getName())){
-			store.add({name: montoMensual.getName()}, {monto: 0});
+			store.add({name: montoMensual.getName(), monto: montoMensual.getValue()});
 		}else{
 			var index = store.findExact('name', montoMensual.getName());
 			var record = store.getAt(index);
 			record.set('monto', montoMensual.getValue());
-		}*/
+		}
+		
+		store.sync();
 		
 		//Ruta de los Parametros del presupuesto y si se sustituye getLabel por getValue obtenemos el valor
 		//model.getItems().map.myFSp.items.items[0].getLabel()
+		var store = Ext.getStore('Presupuestos');
 		
 		var info = model.getItems().map.myFSp.items.items;
+		
+		var acumulado = 0;
 		for (i=0; i<store.getCount(); i++){
-			if(null != store.findRecord('name', info[i].getLabel())){
-				var index = store.findExact('name', info[i].getLabel());
-				var record = store.getAt(index);
-				record.set('monto', info[i].getValue());
+			acumulado = acumulado + info[i].getValue();
+		}
+		console.log(acumulado);
+		if(acumulado> montoMensual.getValue()){
+Ext.Msg.alert('Espera!', 'El monto acumulado en los parametros ('+acumulado+') es mayor al monto base', Ext.emptyFn)}
+		else{
+			for (i=0; i<store.getCount(); i++){
+	
+				var infoModel = Ext.create('myMoney.model.Presupuesto',{
+					name: info[i].getName(),
+					monto: info[i].getValue()
+				})
+			
+				var errors = infoModel.validate();
+				
+				if(errors.length!=0){
+					Ext.Msg.alert('Espera!', errors.items[0].getMessage(), Ext.emptyFn);
+					myMenu.hide();
+					return;
+				}
+			
+				if(null != store.findRecord('name', info[i].getLabel())){
+					var index = store.findExact('name', info[i].getLabel());
+					var record = store.getAt(index);
+					record.set('monto', info[i].getValue());
+				}
 			}
 		}
 		

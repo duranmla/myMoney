@@ -18,18 +18,19 @@ Ext.define('myMoney.view.Presupuesto', {
 		var field = {
 			xtype: 'numberfield',
 			name: 'montoBase',
-			label: 'Monto Mensual',
+			id: 'baseP',
+			label: 'Monto Base',
+			labelWidth: screen.availWidth/2,
 			value: 0,
 			minValue: 0,
 		};
 		
 		var  buttonEA = {
-			xtype: 'segmentedbutton',
-
-			items: [
-			{text: 'Editar', ui: 'action', id: 'bEdita'},
-			{text: 'Bloquear', ui: 'action', id: 'bAcepta'}
-			]
+			xtype: 'button',
+			id: 'lockB',
+			text: 'Editar', 
+			ui: 'action',
+			width: screen.availWidth/3
 		};
 		
 		var buttonReturn = {

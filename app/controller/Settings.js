@@ -21,14 +21,25 @@ Ext.define('myMoney.controller.Settings', {
 			
 			'configuracion #addAcc': {
 				tap: 'add'
+			},
+			
+			'configuracion #verBank': {
+				tap: 'show'
+			},
+			
+			'configuracion #addBank': {
+				tap: 'add'
 			}
 
-        }
+        },
     },
 
+	//Muestra Cuentas, Categorias o Bancos
 	show: function(button, id){
 	if(button.getId() == 'verClass'){
 		var elStore = 'Categorias';
+	}else if(button.getId() == 'verBank'){
+		var elStore = 'Bancos';
 	}else{
 		var elStore = 'Cuentas';
 	}
@@ -39,10 +50,11 @@ Ext.define('myMoney.controller.Settings', {
 			scrollable: true,
 			hideOnMaskTap: true,
 			modal: true,
-			centered: true,
-			width: screen.availWidth/2,
+			top: '10%',
+			width: screen.availWidth/1.5,
 			height: screen.availHeight/2,
 			styleHtmlCls: true,
+			
 				items:[
 					{
 						xtype: 'list',
@@ -52,6 +64,7 @@ Ext.define('myMoney.controller.Settings', {
 								//Capturo el item seleccionado para almacenarlo si se quiere borrar.
 								select: function(view, record) {
 									itemSelect = record;
+									console.log(itemSelect);
 								}
 						}
 					},
@@ -64,13 +77,23 @@ Ext.define('myMoney.controller.Settings', {
 									iconMask: true,  
 									iconCls:'x-icon-mask trash', 
 									ui: 'plain',
-									handler: function(){
-										console.log('borro '+itemSelect);
+									handler: 
+									//Borra cuenta o categoria
+										function(){
+										console.log('Borrando')
 										var myStore = Ext.getStore(elStore);
 										myStore.remove(itemSelect);
 										myStore.sync();
-										itemSelect = null;
-									}
+											if(elStore == 'Categorias'){
+												console.log('Borrando de Presupuesto')
+												var myStore = Ext.getStore('Presupuestos');
+												var target = myStore.findExact('name', itemSelect.data.name);
+												myStore.removeAt(target);
+												myStore.sync();
+												Ext.getCmp('presId').fillParametres();
+											}
+										},
+									scope: this
 								}
 						]
 					}
@@ -78,14 +101,17 @@ Ext.define('myMoney.controller.Settings', {
 		});
 	},
 	
+	//Crea Cuentas, Categorias o Bancos
 	add: function(button, id){
 	if(button.getId() == 'addClass'){
 		var elStore = 'Categorias';
-		var msg = 'categoria'
-		console.log('Agrego en Categoria');
+		var msg = 'Categoria'
+	}else if(button.getId() == 'addBank'){
+		var elStore = 'Bancos';
+		var msg = 'Banco'
 	}else{
 		var elStore = 'Cuentas';
-		var msg = 'cuenta'
+		var msg = 'Cuenta'
 		console.log('Agrego en Cuenta');
 	}
 		//Agrego una pequena ventana para introducir los datos.
@@ -94,8 +120,8 @@ Ext.define('myMoney.controller.Settings', {
 			layout: {type: 'vbox', pack: 'center', align: 'Stretch'},
 			hideOnMaskTap: true,
 			modal: true,
-			centered: true,
-			width: screen.availWidth/2,
+			top: '10%',
+			width: screen.availWidth,
 			height: screen.availHeight/2,
 			
 			items: [
@@ -104,7 +130,7 @@ Ext.define('myMoney.controller.Settings', {
 					items: [{
 						xtype: 'textfield',
 						label: 'Nombre',
-						placeHolder: 'Nombre de la '+msg,
+						placeHolder: ''+msg,
 						name: 'classn'
 					}]	
 				},
@@ -171,4 +197,5 @@ Ext.define('myMoney.controller.Settings', {
 		});
 	},
 	
+	//Configurar historial listado
 });

@@ -6,7 +6,7 @@ Ext.application({
     ],
 
     models: ["Transaccion", "Name", "Contactos", "Presupuesto"],
-	stores: ['Contactos','Cuentas','Transacciones','Presupuestos', 'Categorias'],
+	stores: ['Contactos','Cuentas','Transacciones','Presupuestos', 'Categorias', 'MontoPresupuesto', 'Bancos'],
     controllers: ["Historial", "Settings", "Agenda", "Inicio", "Acciones"],
     views: ['Main','Inicio','Acciones','Agenda','Settings','Historial','ListaContactos', 'ContactoEditor', 
 			'ListaN', 'Transaccion','HistorialGrafico', 'HistorialListado', 'Presupuesto', 'MyCal'],

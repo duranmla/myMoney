@@ -46,16 +46,13 @@ Ext.define('myMoney.controller.Agenda', {
 	addNewContact: function(){
     	console.log('Agregando contacto desde el controlador!');
 
-		var ahora = new Date();
-		var contactId = (ahora.getTime()).toString() + (this.getRandomInt(0, 100)).toString();
-
 		var newContact = Ext.create("myMoney.model.Contactos", {
-			id: contactId,
 			firstName: "",
 			lastName: "",
 			title: "",
             telephone: "",
 			email: "",
+			cedula: "",
 			bankname: "",
 			accountnumber: ""
 	    });
@@ -138,5 +135,7 @@ Ext.define('myMoney.controller.Agenda', {
 		Ext.getStore("Transacciones").load();
 		Ext.getStore("Cuentas").load();
 		Ext.getStore("Presupuestos").load();
+		Ext.getStore("MontoPresupuesto").load();
+		Ext.getStore("Bancos").load();
     },
 });

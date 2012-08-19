@@ -43,11 +43,20 @@ Ext.define('myMoney.view.ContactoEditor', {
 			placeHolder: 'contacto@email.com'
 		};
 		
-		var banco = {
+		var textCI = {
 			xtype: 'textfield',
-			label: 'Banco',
+			label: 'CI/RIF',
+			placeHolder: 'CI/RIF',
+			name: 'cedula',
+		};
+		
+		var banco = {
+			xtype: 'selectfield',
+			label: 'Bancos',
 			name: 'bankName',
-			placeHolder: 'Banco'
+			store: 'Bancos',
+			displayField: 'name',
+			valueField: 'name',
 		};
 		
 		var nroBanco = {
@@ -134,7 +143,7 @@ Ext.define('myMoney.view.ContactoEditor', {
 				xtype: 'fieldset', 
 				title: 'Datos',
 				instructions: 'Indique los datos del nuevo contacto',
-				items:[textNombre, textApellido, textTitle, textTlf, textEmail, banco, nroBanco]
+				items:[textNombre, textApellido, textTitle, textTlf, textEmail, textCI, banco, nroBanco]
 			},
 			bottomBar]);
 	},

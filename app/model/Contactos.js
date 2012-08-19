@@ -6,19 +6,22 @@ Ext.define('myMoney.model.Contactos', {
 		
 		idProperty: 'id',
 		
+		identifier: {
+			type: 'uuid'
+		},
+		
         fields: [
-			{name: 'id', type: 'int'},
             {name: 'firstName', type: 'string'},
             {name: 'lastName', type: 'string'},
             {name: 'title', type: 'auto'},
             {name: 'telephone', type: 'auto'},
             {name: 'email', type: 'auto'},
+			{name: 'cedula', type: 'auto'},
 			{name: 'bankName', type: 'string'},
             {name: 'accountNumber', type: 'double'}
         ],
 		
 		validations: [
-			{ type: 'presence', field: 'id'},
 			{ type: 'presence', field: 'firstName', message: 'El contacto debe tener un nombre'},
 		],
 		

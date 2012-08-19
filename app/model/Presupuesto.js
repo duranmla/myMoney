@@ -13,6 +13,10 @@ Ext.define('myMoney.model.Presupuesto', {
 		fields: [
 			{name: 'name', type: 'string'},
 			{name: 'monto', type: 'float'},
+		],
+		
+		validations: [
+			{type: 'presence', field: 'monto', message: 'Debe introducir un monto valido'}
 		]
 	}
 });
