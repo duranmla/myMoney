@@ -33,7 +33,6 @@ Ext.define('myMoney.controller.Agenda', {
 	animacionDer: {type: 'slide', direction: 'right'},
 	
 	muestraVentana: function(record){
-		console.log(record);
 		var contactoEditor = this.getEditor();
 		contactoEditor.setRecord(record);
 		Ext.Viewport.animateActiveItem(contactoEditor, this.animacionIzq);
@@ -65,7 +64,6 @@ Ext.define('myMoney.controller.Agenda', {
     },
 	
 	guardaContacto: function(){
-		console.log('Guardando desde el controlador');
 		
 		//Tomo el control del modelo
 		var modelo = this.getEditor();
@@ -136,7 +134,6 @@ Ext.define('myMoney.controller.Agenda', {
 	launch: function () {
         this.callParent();
 		Ext.getStore("Contactos").load();
-		//Ext.getStore("Notificaciones").load();
 		Ext.getStore("Categorias").load();
 		Ext.getStore("Transacciones").load();
 		Ext.getStore("Cuentas").load();

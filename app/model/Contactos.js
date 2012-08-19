@@ -1,6 +1,7 @@
 Ext.define('myMoney.model.Contactos', {
     extend: 'Ext.data.Model',
-    
+    requires: 'Ext.data.identifier.Uuid',
+	
     config: {
 		
 		idProperty: 'id',

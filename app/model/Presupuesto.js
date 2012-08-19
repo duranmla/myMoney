@@ -4,6 +4,8 @@ Ext.define('myMoney.model.Presupuesto', {
 	
 	config: {
 		
+		idProperty: 'id',
+		
 		identifier: {
 			type: 'uuid'
 		},

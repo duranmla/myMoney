@@ -59,9 +59,23 @@ Ext.define('myMoney.controller.Acciones', {
 		myStore.add(myInfo);
 		myStore.sync();
 		Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');
-		model.reset();
+		
+		console.log('Estoy editando?'+this.getTransaccion().miEstado());
+		if(this.getTransaccion().miEstado()==false){
+			console.log('Entre a reset');
+			model.reset();
+		}
+		
+		//var edito = this.getTransaccion().verificaEdicion();
 	},
 	
+	muestraVentana: function(record){
+		var transaccEditor = this.getTransaccion();
+		transaccEditor.setRecord(record);
+		Ext.Viewport.animateActiveItem(transaccEditor, this.animacionIzq);
+	},
+	
+	//Traducir la fecha
 	translateMyDate: function(miMes, miDia, full){
 	//Meses
 	switch (miMes){
@@ -195,6 +209,7 @@ Ext.define('myMoney.controller.Acciones', {
 	//Guardado de las Transacciones
 	saveTransCommand: function(){
 		var model = this.getTransaccion();
+		var valoresActuales = model.getRecord();
 		var values = model.getValues();
 		
 		//Formato de Fecha con mm/dd/yyyy
@@ -205,15 +220,14 @@ Ext.define('myMoney.controller.Acciones', {
 		
 		this.translateMyDate(values.fecha);
 		
-		var myInfo = Ext.create('myMoney.model.Transaccion', {
-			"clasificacion": values.clasificacion,
-			"descripcion": values.descripcion,
-			"monto": values.monto,
-			"cuenta": values.cuenta,
-			"date": values.fecha
-		})
+		//Actualizo los campos del contacto para luego poder usar el metodo de validacion sobre mi modelo
+		valoresActuales.set('clasificacion',values.clasificacion);
+		valoresActuales.set('descripcion',values.descripcion);
+		valoresActuales.set('monto',values.monto);
+		valoresActuales.set('cuenta',values.cuenta);
+		valoresActuales.set('date',values.fecha);
 		
-		var errors = myInfo.validate();
+		var errors = valoresActuales.validate();
 		//Muestro el error si existe alguno
 		if(errors.items.length!=0){
 			for(i=0;i<errors.length;i++){
@@ -226,19 +240,27 @@ Ext.define('myMoney.controller.Acciones', {
 				'Los valores en blanco seran guardados con el nombre de "Otros" desea continuar?',
 				function(buttonId, value){
 					if(buttonId=='yes'){
-						myInfo.set('clasificacion', 'Otros'); myInfo.set('cuenta', 'Otros');
-						this.isTimeToSave(myInfo, model);
+						valoresActuales.set('clasificacion', 'Otros'); valoresActuales.set('cuenta', 'Otros');
+						this.isTimeToSave(valoresActuales, model);
 					}else{return;}
 				});
-			}else{this.isTimeToSave(myInfo, model);}
+			}else{this.isTimeToSave(valoresActuales, model);}
 		}
 	},
 	
-	//Menu de Acciones
+	//Muestra vistas
 	showDetails: function(list, index, element, record){
 		switch(index){
-		case 0: 
-			Ext.Viewport.animateActiveItem(this.getTransaccion(), this.animacionIzq);
+		case 0:
+			var myInfo = Ext.create('myMoney.model.Transaccion', {
+				"clasificacion": "Otros",
+				"descripcion": "",
+				"monto": "",
+				"cuenta": "Otros",
+				"date": "",
+			}); 
+			
+			this.muestraVentana(myInfo);
 		break;
 		
 		case 1: 

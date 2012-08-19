@@ -6,6 +6,15 @@ Ext.define('myMoney.view.Transaccion', {
 	config: {
 		styleHtmlContent: true,
 //		url: 'consumo.php',
+		listeners: {
+			painted: function(){
+				estado = this.verificaEdicion();
+			},
+		},
+	},
+	
+	miEstado: function(){
+		return estado;
 	},
 	
 	initialize: function(){
@@ -84,6 +93,7 @@ Ext.define('myMoney.view.Transaccion', {
 		
 		this.add([topBar,{xtype: 'fieldset',
 					 items: [pClas, pDesc, pMont, pAcco, pDate]}, confirmButton]);
+		
 	},
 	
 	regresar: function(){
@@ -93,4 +103,14 @@ Ext.define('myMoney.view.Transaccion', {
 	saveTrans: function(){
 		this.fireEvent('saveTransCommand')
 	},
+	
+	verificaEdicion: function(){
+		var values = this.getValues();
+		
+		if(values.descripcion == ""){
+			var edito = false
+		}else{var edito = false}
+		
+		return edito;
+	}
 });

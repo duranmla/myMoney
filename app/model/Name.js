@@ -4,6 +4,8 @@ Ext.define('myMoney.model.Name', {
 	
     config: {
 		
+		idProperty: 'id',
+		
 		identifier: {
         	type: 'uuid' //Genera id's unicos
         },

@@ -4,6 +4,8 @@ Ext.define('myMoney.model.Transaccion', {
 	
     config: {
 		
+		idProperty: 'id',
+		
 		identifier: {
 			type: 'uuid'
 		},

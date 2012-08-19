@@ -30,7 +30,6 @@ Ext.define('myMoney.controller.Historial', {
 	animacionDer: {type: 'slide', direction: 'right'},
 	
 	editaTransaccion: function(list, record){
-		console.log(record);
 		this.muestraVista(record);
 	},
 	

@@ -142,7 +142,9 @@ Ext.define('myMoney.controller.Settings', {
 								if (null == myStore.findRecord('name', value.classn)) {
 									myStore.add({name: value.classn});
 										//Aqui se asegura que el store de Presupuesto tenga todas las categorias agregadas
-										if(elStore = 'Categorias'){
+										if(elStore == 'Categorias'){
+											console.log('Guarde en Presupuesto');
+											console.log(elStore);
 											var storeP = Ext.getStore('Presupuestos');
 											storeP.add({name: value.classn, monto: 0});
 											storeP.sync();
