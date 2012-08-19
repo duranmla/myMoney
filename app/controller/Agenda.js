@@ -137,5 +137,6 @@ Ext.define('myMoney.controller.Agenda', {
 		Ext.getStore("Presupuestos").load();
 		Ext.getStore("MontoPresupuesto").load();
 		Ext.getStore("Bancos").load();
+		Ext.getStore("SettingsValues").load();
     },
 });

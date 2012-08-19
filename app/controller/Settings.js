@@ -7,7 +7,7 @@ Ext.define('myMoney.controller.Settings', {
 			presupuesto: 'presupuesto',
         },
         control: {
-			
+			//Controlando para ver y agregar categorias, cuentas y bancos
 			'configuracion #verClass': {
 				tap: 'show'
 			},
@@ -31,9 +31,23 @@ Ext.define('myMoney.controller.Settings', {
 				tap: 'add'
 			},
 			
-			'configuracion #ordenPick': {
+			//Controlando para guardar los datos de la configuracion
+			'configuracion #ordenPick':{
 				change: 'ordena'
-			}
+			},
+			
+			'configuracion #syncWebField': {
+				change: 'obtengoData'
+			},
+			
+			'configuracion #wifiField': {
+				check: 'obtengoData',
+				uncheck: 'obtengoData'
+			},
+			
+			'configuracion #redField': {
+				check: 'obtengoData',
+				uncheck: 'obtengoData'			}
         },
     },
 
@@ -206,9 +220,37 @@ Ext.define('myMoney.controller.Settings', {
 		var store = Ext.getStore('Transacciones');
 //		store.setGroupDir('ASC').sort();
 		store.setGrouper(valorNew).sort();
+		this.obtengoData();
 	},
 	
-	launch: function (){
+	//Tomando los valores necesarios para entrar a la funcion configura corrrectamente
+	obtengoData: function(){
+		var syncSet = Ext.getCmp('syncWebField').getValue(); 
+		var sortSet = Ext.getCmp('ordenPick').getValue();
+		var wifiSet = Ext.getCmp('wifiField').isChecked();
+		var redSet = Ext.getCmp('redField').isChecked();
+		console.log(syncSet, sortSet, wifiSet, redSet);
+		this.configura(syncSet, sortSet, wifiSet, redSet);
+	},
 	
-	} 
+	//Almacenando informacion de la Configuracion
+	configura: function(syncSet, sortSet, wifiSet, redSet){
+		var store = Ext.getStore('SettingsValues');
+		var model = this.getSettings();
+		
+		var	myRecord = Ext.create('myMoney.model.SettingsValues',{
+				syncWeb: syncSet,
+				wifi: false,
+				movil: false,
+				sortHist: sortSet,
+		});
+
+		store.removeAll();
+		store.sync();
+		
+			if (store.findRecord('id', myRecord.id)==null){
+					store.add(myRecord);
+					store.sync();
+			}
+	}
 });

@@ -1,10 +1,10 @@
 Ext.define('myMoney.view.Settings',{
-	extend: 'Ext.Container',
+	extend: 'Ext.form.Panel',
 	fullscreen: true,
 	xtype: 'configuracion',
 	
 	requires: ['Ext.field.Toggle', 'Ext.SegmentedButton'],
-	
+		
 	config: {
 		title: 'Configuración',
 		iconCls: 'settings',
@@ -29,7 +29,8 @@ Ext.define('myMoney.view.Settings',{
 				    {
 					   	xtype: 'togglefield',
 					    name: 'confred',
-					    value: 1,
+						id: 'syncWebField',
+					    value: 0,
 					    label: 'Off/On',
 						labelWidth: screen.availWidth/4,
 				    }
@@ -44,12 +45,14 @@ Ext.define('myMoney.view.Settings',{
 	                {
 	                    xtype: 'checkboxfield',
 	                    label: 'Wi-Fi',
+						id: 'wifiField',
 	                    name: 'redop1',
 						labelWidth: screen.availWidth/4,
 	                },
 	                {
 	                    xtype: 'checkboxfield',
 	                    label: 'Red Movil',
+						id: 'redField',
 	                    name: 'redop2',
 						labelWidth: screen.availWidth/4,
 	                }
@@ -58,7 +61,7 @@ Ext.define('myMoney.view.Settings',{
 			{
 				xtype: 'fieldset',
 				title: 'Configuracion de Categorías',
-				instructions: 'Elimine/Agregue Categorías',
+				instructions: 'Visualiza y Agrega nuevas Categorías',
 				
 				items: [
 					{
@@ -68,7 +71,7 @@ Ext.define('myMoney.view.Settings',{
 							{
 								id: 'verClass',
 								ui: 'action',
-								text: 'Categorías',
+								text: 'Ver Categorías',
 								width: screen.availWidth/2,
 								handler: function(){this.fireEvent('verClassCommand', this);} 
 							},
@@ -85,7 +88,7 @@ Ext.define('myMoney.view.Settings',{
 			{
 				xtype: 'fieldset',
 				title: 'Configuracion de Cuentas',
-				instructions: 'Elimine/Agregue Cuentas',
+				instructions: 'Visualiza y Agrega nuevas Cuentas',
 				
 				items: [
 					{
@@ -95,7 +98,7 @@ Ext.define('myMoney.view.Settings',{
 						{
 							id: 'verAcc',
 							ui: 'action',
-							text: 'Cuentas',
+							text: 'Ver Cuentas',
 							width: screen.availWidth/2,
 						},
 						{
@@ -111,7 +114,7 @@ Ext.define('myMoney.view.Settings',{
 			{
 				xtype: 'fieldset',
 				title: 'Configuracion de Bancos',
-				instructions: 'Elimine/Agregue Bancos',
+				instructions: 'Visualiza y Agrega nuevos Bancos',
 				
 				items: [
 					{
@@ -121,7 +124,7 @@ Ext.define('myMoney.view.Settings',{
 						{
 							id: 'verBank',
 							ui: 'action',
-							text: 'Bancos',
+							text: 'Ver Bancos',
 							width: screen.availWidth/2,
 						},
 						{
@@ -156,6 +159,24 @@ Ext.define('myMoney.view.Settings',{
 					}
 				]
 			}
-		]
+		],	
+	
+		listeners: {
+			painted: function(){
+				console.log('Zup');
+				//Cargo la informacion del Store
+				var store = Ext.getStore('SettingsValues');
+				var re = new RegExp("\\d+");
+				var infoConfig = store.findRecord('syncWeb', re);
+				console.log(infoConfig);
+				
+				if(infoConfig!=null){
+					Ext.getCmp('syncWebField').setValue(infoConfig); 
+					//Ext.getCmp('ordenPick').setValue(sortSet);
+					//Ext.getCmp('wifiField').setChecked(wifiSet);
+					//Ext.getCmp('redField').setChecked(redSet);
+				}
+			},
+		},
 	},
 });
