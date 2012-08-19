@@ -54,6 +54,14 @@ Ext.define('myMoney.controller.Acciones', {
 		return dataClass;
 	},
 	
+	isTimeToSave: function(myInfo, model){
+		var myStore = Ext.getStore('Transacciones');
+		myStore.add(myInfo);
+		myStore.sync();
+		Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');
+		model.reset();
+	},
+	
 	translateMyDate: function(miMes, miDia, full){
 	//Meses
 	switch (miMes){
@@ -199,28 +207,30 @@ Ext.define('myMoney.controller.Acciones', {
 		
 		var myInfo = Ext.create('myMoney.model.Transaccion', {
 			"clasificacion": values.clasificacion,
-			"descrip": values.descripcion,
+			"descripcion": values.descripcion,
 			"monto": values.monto,
 			"cuenta": values.cuenta,
 			"date": values.fecha
 		})
 		
-		var error = myInfo.validate();
-
-		if(!error){
-			Ext.Msg.alert('Espera!', error.getByField('descrip')[0].getMessage(), Ext.emptyFn);
+		var errors = myInfo.validate();
+		//Muestro el error si existe alguno
+		if(errors.items.length!=0){
+			for(i=0;i<errors.length;i++){
+			Ext.Msg.alert('Espera!', errors.items[i].getMessage(), Ext.emptyFn);}
 			return;
-		}
-		
-		if(values.descripcion!=""){
-			var myStore = Ext.getStore('Transacciones');
-			myStore.add(myInfo)
-			myStore.sync();
-			Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');
-			model.reset();
 		}else{
-			Ext.Msg.alert('Espera!', 'La transaccion debe tener una descripcion');
-			model.reset();
+		//Guardo los valores porque no hubo ningun error
+			if(values.clasificacion==null||values.cuenta==null){
+				Ext.Msg.confirm('Seguro?', 
+				'Los valores en blanco seran guardados con el nombre de "Otros" desea continuar?',
+				function(buttonId, value){
+					if(buttonId=='yes'){
+						myInfo.set('clasificacion', 'Otros'); myInfo.set('cuenta', 'Otros');
+						this.isTimeToSave(myInfo, model);
+					}else{return;}
+				});
+			}else{this.isTimeToSave(myInfo, model);}
 		}
 	},
 	

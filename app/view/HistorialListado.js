@@ -27,20 +27,30 @@ Ext.define('myMoney.view.HistorialListado', {
 		
 		var lista = {
 				xtype: 'list',
-		        styleHtmlContent: true,
                 store: Ext.getStore('Transacciones'),
 				
+				onItemDisclosure: true,
 		        loadingText: "Cargando Transacciones...",
 		        emptyText: '</pre> <div class="notes-list-empty-text">Sin Transacciones.</div> <pre>',
 				grouped: true,
-				itemTpl:'</pre><div class="list-item-title">{descrip}</div><div class="list-item-narrative">{monto}&nbsp;Bsf.</div><pre>',
+				itemTpl:'</pre><div class="list-item-title">{descripcion}</div><div class="list-item-narrative">{monto}&nbsp;Bsf.</div><pre>',
+				
+				listeners: {
+					disclose: {fn: this.editaTransaccion, scope: this}
+				}
                 
 		}
 		
 		this.add([topBar, lista]);
 	},
 	
+	//Funciones locales
 	backButtonTap: function(){
 		this.fireEvent('needBack')
+	},
+	
+	//Edita transaccion
+	editaTransaccion: function(list, record){
+		this.fireEvent('editaTransaccionCommand',this, record);
 	}
 });

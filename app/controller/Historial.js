@@ -6,6 +6,8 @@ Ext.define('myMoney.controller.Historial', {
 			historial: 'historial',
 			historialGrafico: 'historialGrafico',
 			histList: 'histList',
+			transaccion: 'transaccion',
+			
 			mainView: 'mainView',
         },
         control: {
@@ -18,7 +20,8 @@ Ext.define('myMoney.controller.Historial', {
 			},
 			
 			histList: {
-				needBack: 'needBack'
+				needBack: 'needBack',
+				editaTransaccionCommand: 'editaTransaccion'
 			}
         }
     },
@@ -26,6 +29,17 @@ Ext.define('myMoney.controller.Historial', {
 	animacionIzq: {type: 'slide', direction: 'left'},
 	animacionDer: {type: 'slide', direction: 'right'},
 	
+	editaTransaccion: function(list, record){
+		console.log(record);
+		this.muestraVista(record);
+	},
+	
+	muestraVista: function(record){
+		var transaccionEditor = this.getTransaccion();
+		transaccionEditor.setRecord(record);
+		Ext.Viewport.animateActiveItem(transaccionEditor, this.animacionIzq);
+	},
+		
 	needBack: function(){
 		Ext.Viewport.animateActiveItem(this.getMainView(), this.animacionDer);
 	},

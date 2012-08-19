@@ -33,6 +33,7 @@ Ext.define('myMoney.controller.Agenda', {
 	animacionDer: {type: 'slide', direction: 'right'},
 	
 	muestraVentana: function(record){
+		console.log(record);
 		var contactoEditor = this.getEditor();
 		contactoEditor.setRecord(record);
 		Ext.Viewport.animateActiveItem(contactoEditor, this.animacionIzq);

@@ -85,7 +85,7 @@ Ext.define('myMoney.view.ContactoEditor', {
 		
 		topBar = {
 			xtype: 'toolbar',
-			title: 'Nuevo Contacto',
+			title: 'Contacto',
 			docked: 'top',
 			items: [regresa, {xtype: 'spacer'}, guarda]
 		};
