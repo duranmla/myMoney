@@ -18,15 +18,15 @@ Ext.define('myMoney.view.Inicio', {
 		items: [
 			{
 				xtype: 'toolbar',
-				title: 'Inicio de Sesion',
+				title: 'Bienvenido(a)',
 				docked: 'top'
 			},
 			{
 				xtype: 'fieldset',
 				margin: '20',
-				title: 'Inicio de Sesion',
+				title: 'Inicio de Sesión',
 				id: 'loginForm',
-				instructions: 'Por favor coloca tu usuario y clave, luego presione el boton aceptar',
+				instructions: 'Por favor coloca tu usuario y clave, luego presione el botón aceptar',
 				styleHtmlContent: true,
 				
 				items: [

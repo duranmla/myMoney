@@ -119,8 +119,8 @@ Ext.define('myMoney.controller.Settings', {
 													Ext.getCmp('presId').fillParametres();
 												}
 											}
+											showAccount.show();												
 										});
-									showAccount.show();	
 									},
 									scope: this
 								}
@@ -211,9 +211,7 @@ Ext.define('myMoney.controller.Settings', {
 										}
 									myStore.sync();
 									newClass.hide();
-									Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente', 
-									function(){newClass.show();});
-									newClass.reset();								
+									Ext.Msg.alert('Hecho', 'La información se ha almacenado satisfactoriamente');							
 								}else{
 									newClass.hide();
 									Ext.Msg.alert('Espera!', 'Esa '+msg+' ya existe', function(){newClass.show();});

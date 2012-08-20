@@ -1,5 +1,6 @@
 Ext.define('myMoney.model.SettingsValues', {
 	extend: 'Ext.data.Model',
+	requires: 'Ext.data.identifier.Uuid',
 	
 	config: {
 		idProperty: 'id',

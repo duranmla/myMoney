@@ -54,7 +54,7 @@ Ext.define('myMoney.controller.Acciones', {
 		var myStore = Ext.getStore('Transacciones');
 		myStore.add(myInfo);
 		myStore.sync();
-		Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');
+		Ext.Msg.alert('Hecho', 'La información se ha almacenado satisfactoriamente');
 		
 		console.log('Estoy editando?'+this.getTransaccion().miEstado());
 		if(this.getTransaccion().miEstado()==false){
@@ -291,8 +291,8 @@ Ext.Msg.alert('Espera!', 'El monto acumulado en los parametros ('+acumulado+') e
 				'Los valores en blanco seran guardados con el nombre de "Otros" desea continuar?',
 				function(buttonId, value){
 					if(buttonId=='yes'){
-						valoresActuales.set('clasificacion', 'Otros'); 
-						valoresActuales.set('cuenta', 'Otros');
+						if(values.clasificacion==null){valoresActuales.set('clasificacion', 'Otros');} 
+						if(values.cuenta==null){valoresActuales.set('cuenta', 'Otros');}
 						me.isTimeToSave(valoresActuales, model);
 					}else{return;}
 				});

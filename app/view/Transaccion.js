@@ -22,7 +22,7 @@ Ext.define('myMoney.view.Transaccion', {
 		
 		var pClas = {
 			xtype: 'selectfield',
-			label: 'Categoria',
+			label: 'Categoría',
 			name: 'clasificacion',
 			store: 'Categorias',
 			displayField: 'name',
@@ -32,7 +32,7 @@ Ext.define('myMoney.view.Transaccion', {
 		var pDesc = {
 			xtype: 'textfield',
 			name: 'descripcion',
-			label: 'Descripcion'
+			label: 'Descripción'
 		};
 		
 		var pMont = {
@@ -87,7 +87,7 @@ Ext.define('myMoney.view.Transaccion', {
 		var topBar = {
 			xtype: 'toolbar',
 			docked: 'top',
-			title: 'Transaccion',
+			title: 'Transacción',
 			items: [buttonBack],
 		};
 		

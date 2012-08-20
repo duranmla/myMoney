@@ -23,8 +23,8 @@ Ext.define('myMoney.view.Settings',{
 		items: [
 			{
 				xtype: 'fieldset',
-				title: 'Permitir Sincronizacion Web',
-				instructions: 'Esta opcion debe estar habilitada para poseer respaldo de su información y permitir el acceso desde otros dispositivos (verifique su plan de datos)',
+				title: 'Permitir Sincronización Web',
+				instructions: 'Esta opción debe estar habilitada para poseer respaldo de su información y permitir el acceso desde otros dispositivos (verifique su plan de datos)',
 				items: [
 				    {
 					   	xtype: 'togglefield',
@@ -39,7 +39,7 @@ Ext.define('myMoney.view.Settings',{
 	        {
 	            xtype: 'fieldset',
 				id: 'conectionField',
-	            title: 'Cuando Permitir Conexion',
+	            title: 'Cuando Permitir Conexión',
 	            instructions: 'Habilite ambas opciones de ser necesario',
 	            items: [
 	                {
@@ -51,7 +51,7 @@ Ext.define('myMoney.view.Settings',{
 	                },
 	                {
 	                    xtype: 'checkboxfield',
-	                    label: 'Red Movil',
+	                    label: 'Red Móvil',
 						id: 'redField',
 	                    name: 'redop2',
 						labelWidth: screen.availWidth/4,
@@ -60,7 +60,7 @@ Ext.define('myMoney.view.Settings',{
 	        },
 			{
 				xtype: 'fieldset',
-				title: 'Configuracion de Categorías',
+				title: 'Configuración de Categorías',
 				instructions: 'Visualiza y Agrega nuevas Categorías',
 				
 				items: [
@@ -87,7 +87,7 @@ Ext.define('myMoney.view.Settings',{
 			},
 			{
 				xtype: 'fieldset',
-				title: 'Configuracion de Cuentas',
+				title: 'Configuración de Cuentas',
 				instructions: 'Visualiza y Agrega nuevas Cuentas',
 				
 				items: [
@@ -113,7 +113,7 @@ Ext.define('myMoney.view.Settings',{
 			},
 			{
 				xtype: 'fieldset',
-				title: 'Configuracion de Bancos',
+				title: 'Configuración de Bancos',
 				instructions: 'Visualiza y Agrega nuevos Bancos',
 				
 				items: [
@@ -139,7 +139,7 @@ Ext.define('myMoney.view.Settings',{
 			},
 			{
 				xtype: 'fieldset',
-				title: 'Configuracion Historial Listado',
+				title: 'Configuración Historial Listado',
 				instructions: 'Configure el orden en el que se muestran las transacciones',
 				
 				items: [
