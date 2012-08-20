@@ -7,7 +7,7 @@ Ext.define('myMoney.store.Presupuestos', {
 		
 		proxy: {
 			type: 'localstorage',
-			id: 'data-presupuestos'
+			id: 'data-presupuestos-id'
 		}
 	}
 });

@@ -27,10 +27,10 @@ Ext.define('myMoney.view.HistorialGrafico', {
 		
 		var lista = {
 				xtype: 'list',
-                itemTpl: '{name}&nbsp;Ideal:{monto}&nbsp;Acumulado{}',
+                store: Ext.getStore('prueba'),
+                itemTpl: '{name}&nbsp;Ideal:{monto}&nbsp;Acumulado',
 				ui: 'round',
 		        styleHtmlContent: true,
-                store: Ext.getStore('Presupuesto')
 		}
 		
 		this.add([topBar, lista]);

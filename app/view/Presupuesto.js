@@ -66,9 +66,9 @@ Ext.define('myMoney.view.Presupuesto', {
 		};
 		
 		this.add([topBar,buttonEA,  
-				{xtype: 'fieldset', id: 'myFSm', title: 'Monto Base', instructions: 'Indique el monto mensual aproximado para la creacion del presupuesto', 
+				{xtype: 'fieldset', id: 'myFSm',disabled: true, title: 'Monto Base', instructions: 'Indique el monto mensual aproximado para la creacion del presupuesto', 
 				items: [field]},
-				{xtype: 'fieldset', id: 'myFSp', title: 'Parametros', instructions: 'Valores ideales de gastos para el cumplimiento del presupuesto',
+				{xtype: 'fieldset', id: 'myFSp',disabled: true, title: 'Parametros', instructions: 'Valores ideales de gastos para el cumplimiento del presupuesto',
 				}, bottomBar]);
 				
 		this.fillParametres();

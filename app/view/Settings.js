@@ -163,18 +163,22 @@ Ext.define('myMoney.view.Settings',{
 	
 		listeners: {
 			painted: function(){
-				console.log('Zup');
 				//Cargo la informacion del Store
 				var store = Ext.getStore('SettingsValues');
 				var re = new RegExp("\\d+");
 				var infoConfig = store.findRecord('syncWeb', re);
-				console.log(infoConfig);
 				
 				if(infoConfig!=null){
-					Ext.getCmp('syncWebField').setValue(infoConfig); 
-					//Ext.getCmp('ordenPick').setValue(sortSet);
-					//Ext.getCmp('wifiField').setChecked(wifiSet);
-					//Ext.getCmp('redField').setChecked(redSet);
+					Ext.getCmp('syncWebField').setValue(infoConfig.getData().syncWeb); 
+					Ext.getCmp('ordenPick').setValue(infoConfig.getData().sortHist);
+					
+					if(infoConfig.getData().wifi==1){
+						Ext.getCmp('wifiField').setChecked(true);
+					}else{Ext.getCmp('wifiField').setChecked(false);}
+					
+					if(infoConfig.getData().movil==1){
+						Ext.getCmp('redField').setChecked(true);
+					}else{Ext.getCmp('redField').setChecked(true);}
 				}
 			},
 		},

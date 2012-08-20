@@ -270,6 +270,7 @@ Ext.Msg.alert('Espera!', 'El monto acumulado en los parametros ('+acumulado+') e
 		
 		this.translateMyDate(values.fecha);
 		
+		//console.log('la fecha que agarras> '+Ext.Date.format(values.fecha, 'j/n/Y'));
 		//Actualizo los campos del contacto para luego poder usar el metodo de validacion sobre mi modelo
 		valoresActuales.set('clasificacion',values.clasificacion);
 		valoresActuales.set('descripcion',values.descripcion);

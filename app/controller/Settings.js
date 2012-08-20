@@ -53,6 +53,8 @@ Ext.define('myMoney.controller.Settings', {
 
 	//Muestra Cuentas, Categorias o Bancos
 	show: function(button, id){
+	itemSelect = null;
+	
 	if(button.getId() == 'verClass'){
 		var elStore = 'Categorias';
 	}else if(button.getId() == 'verBank'){
@@ -88,28 +90,38 @@ Ext.define('myMoney.controller.Settings', {
 					{
 						xtype: 'toolbar',
 						docked: 'bottom',
-						items: [{xtype: 'spacer'},
+						items: [{xtype: 'button',
+								 text: 'Cerrar',
+								 	handler: function(){
+										showAccount.hide();
+									}
+								},
+								{xtype: 'spacer'},
 								{
 									xtype: 'button',
 									iconMask: true,  
 									iconCls:'x-icon-mask trash', 
 									ui: 'plain',
-									handler: 
-									//Borra cuenta o categoria
-										function(){
-										console.log('Borrando')
-										var myStore = Ext.getStore(elStore);
-										myStore.remove(itemSelect);
-										myStore.sync();
-											if(elStore == 'Categorias'){
-												console.log('Borrando de Presupuesto')
-												var myStore = Ext.getStore('Presupuestos');
-												var target = myStore.findExact('name', itemSelect.data.name);
-												myStore.removeAt(target);
+									handler: function(){
+										if(itemSelect==null){return;}
+										showAccount.hide();
+										Ext.Msg.confirm('Espera!', 'Estas seguro de borrar la categoria '+itemSelect.data.name+'?', function(buttonId){
+											if(buttonId=='yes'){
+												var myStore = Ext.getStore(elStore);
+												myStore.remove(itemSelect);
 												myStore.sync();
-												Ext.getCmp('presId').fillParametres();
+												if(elStore == 'Categorias'){
+													console.log('Borrando de Presupuesto')
+													var myStore = Ext.getStore('Presupuestos');
+													var target = myStore.findExact('name', itemSelect.data.name);
+													myStore.removeAt(target);
+													myStore.sync();
+													Ext.getCmp('presId').fillParametres();
+												}
 											}
-										},
+										});
+									showAccount.show();	
+									},
 									scope: this
 								}
 						]
@@ -122,7 +134,8 @@ Ext.define('myMoney.controller.Settings', {
 	add: function(button, id){
 	if(button.getId() == 'addClass'){
 		var elStore = 'Categorias';
-		var msg = 'Categoria'
+		var msg = 'Categoría'
+		console.log('Agrego en Categoria');
 	}else if(button.getId() == 'addBank'){
 		var elStore = 'Bancos';
 		var msg = 'Banco'
@@ -173,10 +186,12 @@ Ext.define('myMoney.controller.Settings', {
 								
 								//Validacion de errores
 								var errors = newClassInfo.validate();
-		
+								
 								if (!errors.isValid()) {
-									Ext.Msg.alert('Espera!', errors.getByField("name")[0].getMessage(), Ext.emptyFn);
+									newClass.hide();
+									Ext.Msg.alert('Espera!', errors.getByField("name")[0].getMessage(), function(){newClass.show();});
 									return;
+									
 								}
 								
 								var myStore = Ext.getStore(elStore);
@@ -185,25 +200,25 @@ Ext.define('myMoney.controller.Settings', {
 								if (null == myStore.findRecord('name', value.classn)) {
 									myStore.add({name: value.classn});
 										//Aqui se asegura que el store de Presupuesto tenga todas las categorias agregadas
-										if(elStore == 'Categorias'){
-											console.log('Guarde en Presupuesto');
-											console.log(elStore);
+										if(elStore == 'Categorias'){								
 											var storeP = Ext.getStore('Presupuestos');
+											
 											storeP.add({name: value.classn, monto: 0});
 											storeP.sync();
-											
+
 											//Actualizo los parametros del presupuesto porque se agrego una categoria
 											Ext.getCmp('presId').fillParametres();										
 										}
 									myStore.sync();
-									Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente');
+									newClass.hide();
+									Ext.Msg.alert('Hecho', 'La informacion se ha almacenado satisfactoriamente', 
+									function(){newClass.show();});
 									newClass.reset();								
 								}else{
-									Ext.Msg.alert('Espera!', 'Esa '+msg+' ya existe', Ext.emptyFn);
-									return;
+									newClass.hide();
+									Ext.Msg.alert('Espera!', 'Esa '+msg+' ya existe', function(){newClass.show();});
+									//return;
 								}
-		
-								newClass.hide();
 							}
 							
 						},
@@ -216,9 +231,9 @@ Ext.define('myMoney.controller.Settings', {
 	
 	//Configurar historial listado
 	ordena: function(picker, valorNew, valorOld){
-		console.log(valorNew)
 		var store = Ext.getStore('Transacciones');
 //		store.setGroupDir('ASC').sort();
+		
 		store.setGrouper(valorNew).sort();
 		this.obtengoData();
 	},
@@ -229,7 +244,6 @@ Ext.define('myMoney.controller.Settings', {
 		var sortSet = Ext.getCmp('ordenPick').getValue();
 		var wifiSet = Ext.getCmp('wifiField').isChecked();
 		var redSet = Ext.getCmp('redField').isChecked();
-		console.log(syncSet, sortSet, wifiSet, redSet);
 		this.configura(syncSet, sortSet, wifiSet, redSet);
 	},
 	

@@ -1,0 +1,13 @@
+Error:
+Uncaught TypeError: Cannot read property 'type' of undefined XTemplateParser.js:224
+
+Fix:
+Temporalmente lo que hago es copiar y pegar elmismo codigo del store en otro archivo. y con eso se soluciona :/. El error se genera justo antes de agregar una nueva informacion.
+------En el historialGrafico la lista que cargaba al store que intentaba llenar tenia un campo en itemTpl: {}<-vacio por lo tanto me lanzaba el error Cannot read property 'type' of undefined
+
+*******************
+Error:
+Uncaught TypeError: Cannot read property 'isModel' of undefined.
+
+Fix: 
+Al vaciar la chache del navegador se quita, sin embargo el fix correcto es agregar idProperty: 'id' al modelo que no lo tenga y manejar identifier: {type: 'uuid'} dentro de los modelos. Eso evita que la aplicacion apunte a un dato con id que ya no existe.
