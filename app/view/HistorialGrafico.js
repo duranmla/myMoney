@@ -74,7 +74,8 @@ Ext.define('myMoney.view.HistorialGrafico', {
 		var tpl = new Ext.XTemplate(
 			'<p>Clasificacion: ',
 			'<tpl for=".">',
-				'<p>{name}</p>',
+				'{name}',
+				'<p>Cosumo Total:&nbsp;{montoR}Bsf.{montoIdl}</p>',
 			'</tpl></p>'
 		);
 		//Fin del molde
