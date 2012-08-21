@@ -247,6 +247,7 @@ Ext.Msg.alert('Espera!', 'El monto acumulado en los parametros ('+acumulado+') e
 					var index = store.findExact('name', info[i].getLabel());
 					var record = store.getAt(index);
 					record.set('monto', info[i].getValue());
+					Ext.Msg.alert('Hecho!', 'Parametros guardados satisfactoriamente', Ext.emptyFn);
 				}
 			}
 		}

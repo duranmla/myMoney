@@ -4,6 +4,11 @@ Ext.define('myMoney.view.HistorialListado', {
 	
 	config: {
 		layout: 'fit',
+		
+		listeners: {
+			painted: function(){
+			}
+		}
 	},
 	
 	initialize: function(){
@@ -33,7 +38,7 @@ Ext.define('myMoney.view.HistorialListado', {
 		        emptyText: '</pre> <div class="notes-list-empty-text">Sin Transacciones.</div> <pre>',
 				grouped: true,
 				itemTpl:'</pre><div class="list-item-title">{descripcion}</div><div class="list-item-narrative">{monto}&nbsp;Bsf.</div><pre>',
-				
+
 				listeners: {
 					disclose: {fn: this.editaTransaccion, scope: this}
 				}

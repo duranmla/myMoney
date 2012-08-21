@@ -25,7 +25,7 @@ Ext.define('myMoney.view.HistorialGrafico', {
 				var montoIdle = valores[2];
 				
 				for(i=0;i<valores[0].length;i++){
-					
+					console.log('CARGANDO DATOS!');
 					var target = store.findRecord('name', categoria[i]);
 					
 					if(target!=null){
@@ -34,19 +34,30 @@ Ext.define('myMoney.view.HistorialGrafico', {
 		
 						record.set('montoR', montoReal[i]);
 						record.set('montoIdl', montoIdle[i]);
+						console.log('Modifique');
 						
-						console.log('Modificado');
 					}else{
 						laInfo.set('name', categoria[i]);
 						laInfo.set('montoR', montoReal[i]);
 						laInfo.set('montoIdl', montoIdle[i]);
 						store.add(laInfo);
-						
-						console.log('Colocado');
+						console.log('agregue');
 					}
-						store.sync();
 				}
-				store.sort([{ property: 'firstName', direction: 'DESC'}]);				
+				store.sync();
+				store.sort([{ property: 'name', direction: 'DESC'}]);
+				
+				//Avisos de presupuesto vs gastos acumulados
+				for(i=0;i<categoria.length;i++){
+					var lim = ((montoReal[i]*100)/montoIdle[i]);
+					if(lim > 100){
+						Ext.Msg.alert('Cuidado!', 'Haz gastado el presupuesto de '+categoria[i], Ext.emptyFn);
+					}else if(lim > 70){
+						Ext.Msg.alert('Cuidado!', 'El presupuesto para la categoría '+categoria[i]+' esta a punto de acabar', Ext.emptyFn);
+					}else if(lim > 50){
+						Ext.Msg.alert('Cuidado!', 'Haz consumido la mitad del presupuesto para '+categoria[i], Ext.emptyFn);
+					}
+				}				
 			},
 		},
 	},
@@ -72,11 +83,49 @@ Ext.define('myMoney.view.HistorialGrafico', {
 		
 		//Molde para mostrar la data de forma que cumpla con los requerimientos
 		var tpl = new Ext.XTemplate(
-			'<p>Clasificacion: ',
-			'<tpl for=".">',
-				'{name}',
-				'<p>Cosumo Total:&nbsp;{montoR}Bsf.{montoIdl}</p>',
-			'</tpl></p>'
+			'<table>',
+				'<tr>',
+					'<td>',
+						'Clasificacion:',
+					'</td>',
+					
+					'<td  align="right">',
+						'<tpl for=".">',
+							'{name}',
+						'</tpl>',
+					'</td>',
+				'</tr>',
+				
+				'<tr>',
+					'<td>',
+						'Cosumo Total:',
+					'</td>',
+					
+					'<td  align="right">',
+						'<tpl for=".">',
+							'{montoR}Bsf.',
+						'</tpl>',
+					'</td>',
+				'</tr>',
+				
+				'<tr>',
+					'<td>',
+						'Presupuesto:',
+					'</td>',
+					
+					'<td  align="right">',
+						'<tpl for=".">',
+							'{montoIdl}Bsf.',
+						'</tpl>',
+					'</td>',
+				'</tr>',
+			
+			'</table>',
+			{
+				// Configuracion del XTemplate
+				disableFormats: true,
+				// Funciones:
+			}
 		);
 		//Fin del molde
 		
